@@ -50,9 +50,9 @@ for i=1:length(gm_vox)
             & data(4,:) <5  ...
             & (data(1,:)+data(2,:))>0 ...
             & not (data(4,:)>2.5 & data(1,:)<0.1)));
-            c_wm=length(data1(1,find(data1(1,:)>0.5)));
-            c_gm=length(data1(1,find(data1(2,:)>0.5)));
-            c_csf=length(data1(1,find(data1(3,:)>0.5)));
+            c_wm=length(data1(1,find(data1(1,:)>0.3)));
+            c_gm=length(data1(1,find(data1(2,:)>0.3)));
+            c_csf=length(data1(1,find(data1(3,:)>0.3)));
             min_size=size(data1,2);
             
             if c_wm >=5 & c_gm >=5 & c_csf >=5
