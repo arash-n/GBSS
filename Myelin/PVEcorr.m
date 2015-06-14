@@ -13,6 +13,10 @@ lesion=read_avw('lesion_in_T1HCP.nii.gz');
 corrected_T1T2=t1t2;
 corrected=zeros(size(t1t2));
 
+% Setting Bounds to the cubic kernels
+max_x=size(seg,1);
+max_y=size(seg,2);
+max_z=size(seg,3);
 %% PVE Correction
 
 gm_vox=find(seg==2); %limits the analyses to voxels with high GM PV 
@@ -28,9 +32,14 @@ for i=1:num_vox
     if gm(a(i),b(i),c(i))<0.99
         brk=0;
         while brk==0
+            %creating a kernel for regression analysis
             xs=a(i)-TS:a(i)+TS;
+            xs=xs(find(xs>0 & xs<max_z));
             ys=b(i)-TS:b(i)+TS;
+            ys=ys(find(ys>0 & ys<max_y));
             zs=c(i)-TS:c(i)+TS;
+            zs=zs(find(zs>0 & zs<max_z));
+
             [X,Y,Z] = meshgrid(xs,ys,zs);
              
             f=f+1;
@@ -59,7 +68,9 @@ for i=1:num_vox
             
             if c_wm >=5 & c_gm >=5 & c_csf >=5
                 bs=regress(data1(4,:)',data1(1:3,:)');
+                %Gray matter PVE corrected
                 corrected_T1T2(a(i),b(i),c(i))=bs(2);
+                %Indicates voxels that have been corrected
                 corrected(a(i),b(i),c(i))=1;
                 brk=1;
                 
