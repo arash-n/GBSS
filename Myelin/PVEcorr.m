@@ -97,4 +97,4 @@ save_avw(corrected_T1T2,'corrected_T1T2.nii.gz','d',[1 1 1 1]);
 save_avw(corrected,'corrected_mask.nii.gz','d',[1 1 1 1]);
 
 time_elapsed=toc/60;
-fprintf('PVE correction finished after %f minutes\n',time_elapsed);
+fprintf('PVE correction finished after %d minutes\n',round(time_elapsed));
