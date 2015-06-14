@@ -3,6 +3,7 @@ addpath( genpath('/usr/share/fsl/5.0/etc/matlab'));
 
 %% Reading Files
 clear all
+tic;
 seg=read_avw('T1w_acpc_dc_restore_brain_seg.nii.gz');
 wm=read_avw('T1w_acpc_dc_restore_brain_pve_2.nii.gz');
 gm=read_avw('T1w_acpc_dc_restore_brain_pve_1.nii.gz');
@@ -94,3 +95,6 @@ end
 
 save_avw(corrected_T1T2,'corrected_T1T2.nii.gz','d',[1 1 1 1]);
 save_avw(corrected,'corrected_mask.nii.gz','d',[1 1 1 1]);
+
+time_elapsed=toc/60;
+fprintf('PVE correction finished after %f minutes\n',time_elapsed);
