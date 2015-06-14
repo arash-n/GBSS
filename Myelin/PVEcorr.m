@@ -70,7 +70,6 @@ for i=1:length(gm_vox)
 
         end
     end
-    
 end
 
 save_avw(corrected_T1T2,'corrected_T1T2.nii.gz','d',[1 1 1 1]);
