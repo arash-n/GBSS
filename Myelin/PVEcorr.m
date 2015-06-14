@@ -20,6 +20,7 @@ gm_vox=find(seg==2); %limits the analyses to voxels with high GM PV
 mask=zeros(size(gm));
 num_vox=length(gm_vox);
 counter=0;percent=0;
+fprintf('%d voxels to go\n',num_vox);
 
 for i=1:num_vox
    TS=5;%smallest half cube for local PVE correction
