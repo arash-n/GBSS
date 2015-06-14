@@ -18,9 +18,10 @@ corrected=zeros(size(t1t2));
 gm_vox=find(seg==2); %limits the analyses to voxels with high GM PV 
 [a b c]= ind2sub(size(seg),gm_vox);
 mask=zeros(size(gm));
+num_vox=length(gm_vox);
+counter=0;percent=0;
 
-f=1;
-for i=1:length(gm_vox)
+for i=1:num_vox
    TS=5;%smallest half cube for local PVE correction
 
     if gm(a(i),b(i),c(i))<0.99
@@ -70,6 +71,13 @@ for i=1:length(gm_vox)
 
         end
     end
+counter=counter+1;    
+   if counter > (num_vox*0.1)
+    percent=percent+10;
+    counter=0;
+    fprintf('%2d%% finished\n',percent);
+end
+
 end
 
 save_avw(corrected_T1T2,'corrected_T1T2.nii.gz','d',[1 1 1 1]);
