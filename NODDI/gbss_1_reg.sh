@@ -22,6 +22,7 @@ echo "This script works as follows:"
 echo "1) The input older containing the following subdirectories:"
 echo "FA, CSF, ODI, fIC"
 echo "2) Each Folder should contain corresponding image files with the same subject name in all folders."
+echo "NOTE: Remove any underline (_) from your filenames."
 echo "Here is its usage:"
 echo "Usage: gbss_1_reg.sh input_directory [options]"
 echo ""
@@ -164,17 +165,21 @@ fsl_sub -N ANTS_${label} antsIntroduction.sh -d 3 -i ${a} -o ${label} -n 0 -s MI
 
 done
 
+jobcount=`qstat|grep ANTS_|wc -l`
+if [ $jobcount -gt 0 ]
+then
+sleep 120
 fi
+fi
+
 ###############################################################
 ######### PART 1.5: Applying Warp Fields to Images  ###########
 ###############################################################
 
-module load ANTS
-out_dir=/scratch/arash/NODDI/allPsych
 cd ${out_dir}/FA/FA
 
-D1_folder=FA/D1_intro #Warp field/Affine Transfrom Directory
-ref=$out_dir/FA/D1/D1_template.nii.gz
+D1_folder=FA/D1 #Warp field/Affine Transfrom Directory
+ref=${out_dir}/FA/D1/D1_template.nii.gz
 
 for FAs in  *_FA.nii.gz
 do
