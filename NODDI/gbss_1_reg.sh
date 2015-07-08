@@ -1,4 +1,3 @@
-
 #!/bin/bash
 
 #v2.1 July 28th 2015
@@ -140,7 +139,7 @@ mkdir ../D1
 cp *_psuedoT1.nii.gz ../D1/
 cd ../D1
 
-if [ $method == 1 ]
+if [ ${#method} == 1 ]
 then
 
 echo "OPTION 1: Creating Template Image"
@@ -153,7 +152,7 @@ fi
 #### PART 1.4.b: Nonlinear Transformation to the Template  ####
 ###############################################################
 #OPTION 2: Requires pre-estimated Template image
-if [ $method == 0 ]
+if [ ${#method} == 0 ]
 then
 echo "OPTION 0: Nonlinear Transformation to a Pre-existing Template Image"
 

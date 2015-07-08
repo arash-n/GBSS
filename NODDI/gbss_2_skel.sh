@@ -1,23 +1,103 @@
-#This script performs the following tasks:
+#!/bin/bash
 
-#1.Concatenating GM probability maps in the MNI space
-#2.Averaging across the sample size the regions with greater probability than 70% of being
-#3.Skeletonizing GM using tbss_skeleton
-#4.Projecting other NODDI indices to the skeleton
-#5.Identifies voxels with sub-optimal GM probability (less than 70% probability) in individual skeletonized GM maps. These could either handled as lesions and submitted to the next script, or filled using a Gaussian kernel with nearby voxels in the gray matter skeleton.
+#v2.1 July 28th 2015
+#Arash Nazeri and Jon Pipitone, Kimel Family Translational
+#Imaging-Genetics Research Lab
+#This script depends on ANTs v2.1 and FSL v4.1.9 (or higher)
 
-out_dir=/scratch/arash/NODDI/allPsych/
-tmp_folder=u55_plus
-stats_folder=`echo stats_${tmp_folder}`
+#Developed at Kimel Family Translational Imaging Genetics Ressearch
+#Laboratory (TIGR), Research Imaging Centre, Campbell Family Mental
+#Health Institute,Centre for Addiction and Mental Health (CAMH),
+#Toronto, ON, Canada
+# http://imaging-genetics.camh.ca
 
+usage() {
+echo ""
+echo "This script performs the following tasks:"
+echo "1.Concatenating GM probability maps in the MNI space"
+echo "2.Averaging across the sample size the regions with greater probability the given threshold"
+echo "3.Skeletonizing GM using tbss_skeleton"
+echo "4.Projecting other NODDI indices to the skeleton"
+echo "5.Identifies voxels with sub-optimal GM probability (less than input threshold probability) in individual skeletonized GM maps. These could either be handled as lesions and submitted to the next script (setup_masks), or filled using a Gaussian kernel with nearby voxels in the gray matter skeleton (gbss_3_fill.sh)."
+echo "Here is its usage:"
+echo ""
+echo "Usage: gbss_2_skel.sh input_directory [options]"
+echo ""
+echo "    -p:  % of Subjects who should have an acceptable voxel. (default: 0.7)"
+echo ""
+echo "    -t:  Input threshold. (Default: 0.65)"
+echo ""
+echo "    -d:  Output directory name. (Default: stats)"
+echo ""
+echo ""
+echo "    -h:  prints this message"
+
+echo ""
+exit 1
+}
+[ "$1" = "" ] && usage
+
+
+tmp_folder=$1
+stats_folder=stats
+method=0
 thresh=0.65 #GM Threshold
+perc=0.7   #percentage of subjects
 
-cd $out_dir
+while getopts "c:h:m:t" OPT
+
+do
+
+case $OPT in
+
+h) #help
+
+usage
+
+;;
+
+m) #threshold method
+
+method=$OPTARG
+
+if [[ ${#method} -gt 1 ]] ; then
+
+echo "-m option can only be 0 or 1"
+exit 1
+
+fi
+
+;;
+
+t)
+
+thresh=$OPTARG
+
+;;
+
+p)
+
+perc=$OPTARG
+
+;;
+
+\?) # getopts issues an error message
+
+usage
+
+exit 1
+
+;;
+
+esac
+
+done
+
 
 mkdir $stats_folder
 cd $stats_folder
 
-fslmerge -t all_GM ${out_dir}/${tmp_folder}/*GM*
+fslmerge -t all_GM ${tmp_folder}/*GM*
 fslmaths all_GM -thr $thresh -bin -Tmean mean_GM
 fslmaths mean_GM -thr 0.2 -bin GM_mask
 tbss_skeleton -i mean_GM.nii.gz -o GM_skel
@@ -30,7 +110,7 @@ distancemap -i GM_mean_skeleton_mask_dst -o GM_mean_skeleton_mask_dst
 fslmaths ${FSLDIR}/data/standard/LowerCingulum_1mm -mul 0 zero
 tbss_skeleton -i mean_GM -p ${thresh} GM_mean_skeleton_mask_dst zero all_GM all_GM_skeletonise
 
-fslmaths all_GM_skeletonise.nii.gz -thr ${thresh} -bin -Tmean -thr 0.75 -bin mean_GM_skeleton_mask_general
+fslmaths all_GM_skeletonise.nii.gz -thr ${thresh} -bin -Tmean -thr $perc -bin mean_GM_skeleton_mask_general
 
 
 fslmerge -t all_ODI ${out_dir}/${tmp_folder}/*ODI*
@@ -51,11 +131,10 @@ fslmaths all_fIC_skeletonised -mul mean_GM_skeleton_mask_general -thr 0.65 -bin 
 fslmaths all_lesion_GM -add all_lesion_WM -add all_lesion_CSF -bin all_lesion
 fslmaths all_lesion -Tmean lesion_mean
 
-
-######OPTION 1
 mkdir lesion
 
 cp all_lesion.nii.gz lesion/
+
 cd lesion
 
 fslsplit all_lesion lesion
