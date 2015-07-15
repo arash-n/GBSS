@@ -11,6 +11,16 @@
 #Toronto, ON, Canada
 # http://imaging-genetics.camh.ca
 
+# NODDI-GBSS (c) by Arash Nazeri and Jon Pipitone, Kimel Family Translational
+# Imaging-Genetics Research Lab
+#
+# NODDI-GBSS is licensed under a
+# Creative Commons Attribution-NonCommercial 4.0 International License.
+#
+# You should have received a copy of the license along with this
+# work.  If not, see <http://creativecommons.org/licenses/by-nc/4.0/>.
+
+
 usage() {
 echo ""
 echo "This script performs the following tasks:"
