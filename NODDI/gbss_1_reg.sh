@@ -62,7 +62,7 @@ usage
 
 ;;
 
-c) #threshold method
+c) #template method
 
 method=$OPTARG
 
