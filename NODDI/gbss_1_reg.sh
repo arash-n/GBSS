@@ -147,8 +147,8 @@ done
 ###############################################################
 ### PART 1.4.a: Creating Template/ Estimating Warp Fields  ####
 ###############################################################
-mkdir ../D1
-cp *_psuedoT1.nii.gz ../D1/
+mkdir ${out_dir}/D1
+cp *_psuedoT1.nii.gz ${out_dir}/D1/
 cd ../D1
 
 if [ ${#method} == 1 ]
