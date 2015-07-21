@@ -126,7 +126,7 @@ do
 subname=`echo ${a%_*}`
 fslmaths ${a} -bin ${subname}_mask
 
-Atropos -d 3 -a ${a} -x  ${subname}_mask.nii.gz -i Kmeans[2] -o [segmentation.nii.gz, ${subname}_%02d.nii.gz]
+Atropos -d 3 -a ${a} -x  ${subname}_mask.nii.gz -i Kmeans[2] -m [0.4,1x1x1] -o [segmentation.nii.gz, ${subname}_%02d.nii.gz]
 
 fslmaths  ${subname}_02 ${subname}_WM_frac
 
@@ -135,7 +135,10 @@ fslmaths ${subname}_mask -mul ${out_dir}/fIC/${subname} ${out_dir}/fIC/${subname
 
 fslmaths ${subname}_WM_frac -add ${out_dir}/CSF/${subname} -sub 1 -mul -1 -thr 0 -mul ${subname}_mask  ${subname}_GM_frac 
 
-fslmaths ${subname}_WM_frac -mul 2 ${subname}_WM_con
+#Discarding high FA voxels outside of the brain
+ImageMath 3 ${subname}_WM_l_component.nii.gz GetLargestComponent ${subname}_WM_frac.nii.gz
+
+fslmaths ${subname}_WM_frac -mul ${subname}_WM_l_component.nii.gz -mul 2 ${subname}_WM_con
 fslmaths ${subname}_GM_frac -mul 1 ${subname}_GM_con
 fslmaths ${out_dir}/CSF/${subname} -mul 0 -add ${subname}_GM_con -add ${subname}_WM_con ${subname}_psuedoT1
 
