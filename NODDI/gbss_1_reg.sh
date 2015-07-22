@@ -62,7 +62,7 @@ case $OPT in
 h) #help
 
 usage
-
+exit 1;
 ;;
 
 c) #template method
