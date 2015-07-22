@@ -52,7 +52,7 @@ exit 1
 #Setting Defaults
 method=1;
 template="${FSLDIR}/MNI152_T1_1mm.nii.gz"
-
+atropos_method=1;
 while getopts "c:h:t:w" OPT
 
 do
@@ -133,8 +133,16 @@ do
 
 subname=`echo ${a%_*}`
 fslmaths ${a} -bin ${subname}_mask
-
+if [ ${#atropos_method} -eq 1 ] ; then
 Atropos -d 3 -a ${a} -x  ${subname}_mask.nii.gz -i Kmeans[2] -m [0.4,1x1x1] -o [segmentation.nii.gz, ${subname}_%02d.nii.gz]
+
+elif  [ ${atropos_method} -eq 0 ]]
+then
+cp ${out_dir}/ODI ${out_dir}/FA/FA/${subname}_prior02.nii.gz
+fslmaths ${subname}_mask.nii.gz -sub ${subname}_prior02.nii.gz -bin ${subname}_prior01.nii.gz
+
+Atropos -d 3 -a ${a} -x  ${subname}_mask.nii.gz --i PriorProbabilityImages[2,wm.diff_%02d.nii.gz,0.2] -m [0.3,1x1x1] -o [segmentation.nii.gz, ${subname}_%02d.nii.gz]
+fi
 
 fslmaths  ${subname}_02 ${subname}_WM_frac
 
@@ -142,6 +150,8 @@ fslmaths ${subname}_mask -mul ${out_dir}/ODI/${subname} ${out_dir}/ODI/${subname
 fslmaths ${subname}_mask -mul ${out_dir}/fIC/${subname} ${out_dir}/fIC/${subname}_m
 
 fslmaths ${subname}_WM_frac -add ${out_dir}/CSF/${subname} -sub 1 -mul -1 -thr 0 -mul ${subname}_mask  ${subname}_GM_frac 
+
+fslmaths ${out_dir}/fIC/${subname} -thr 0.65 -bin -sub ${subname}_GM_frac -mul -1 -bin ${subname}_GM_frac
 
 #Discarding high FA voxels outside of the brain
 ImageMath 3 ${subname}_WM_l_component.nii.gz GetLargestComponent ${subname}_WM_frac.nii.gz
