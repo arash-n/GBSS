@@ -57,47 +57,47 @@ while getopts ":c:h:t:w" OPT
 
 do
 
-case $OPT in
+ case $OPT in
 
-h) #help
+  h) #help
 
-usage
-exit 1;
-;;
+   usage
+   exit 1;
+   ;;
 
-c) #template method
+  c) #template method
 
-method=$OPTARG
+   method=$OPTARG
 
-if [[ ${#method} == 0 ]] ; then
+   if [[ ${#method} == 0 ]] ; then
 
-echo "Using a pre-existing template file..."
+   echo "Using a pre-existing template file..."
 
-fi
+   fi
 
-;;
+   ;;
 
-t) # getopts issues an error message
+ t) # getopts issues an error message
 
-template=$OPTARG
+   template=$OPTARG
 
-;;
+   ;;
 
 w) # getopts issues an error message
 
-atropos_method=$OPTARG
+   atropos_method=$OPTARG
 
-;;
+   ;;
 
 \?) # getopts issues an error message
 
-usage
+   usage
 
-exit 1
+   exit 1
 
-;;
+   ;;
 
-esac
+ esac
 
 done
 
