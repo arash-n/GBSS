@@ -34,10 +34,13 @@ echo "NOTE: Remove any underline (_) from your filenames."
 echo "Here is its usage:"
 echo "Usage: gbss_1_reg.sh input_directory [options]"
 echo ""
-echo "    -c:  to create or use a pre-existing template (default: 1, creates a template"
+echo "    -c:  to create or use a pre-existing template (1 [default]: creates a template;"
 echo "         0: use pre-existing template)"
 echo "    -t:  input template file here. This will be used as the initial template or"
 echo "         final template depending on -c option input."
+echo "    -w:  to use prior white matter probability maps in the diffusion space (1 [default]:"
+echo "         uses Atropos Kmeans as the priors; 0: uses input prior probability maps in the."
+echo "         This option requires a WM folder available."
 echo "    -h:  prints this message"
 
 echo ""
@@ -50,7 +53,7 @@ exit 1
 method=1;
 template="${FSLDIR}/MNI152_T1_1mm.nii.gz"
 
-while getopts "c:h:t" OPT
+while getopts "c:h:t:w" OPT
 
 do
 
@@ -80,6 +83,11 @@ template=$OPTARG
 
 ;;
 
+w) # getopts issues an error message
+
+atropos_method=$OPTARG
+
+;;
 
 \?) # getopts issues an error message
 
