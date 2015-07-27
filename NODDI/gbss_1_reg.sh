@@ -38,6 +38,7 @@ echo "    -c:  to create or use a pre-existing template (1 [default]: creates a 
 echo "         0: use pre-existing template)"
 echo "    -t:  input template file here. This will be used as the initial template or"
 echo "         final template depending on -c option input."
+echo "    -f:  MRF parameter to atropos (0-1)."
 echo "    -w:  to use prior white matter probability maps in the diffusion space (1 [default]:"
 echo "         uses Atropos Kmeans as the priors; 0: uses input prior probability maps in the."
 echo "         This option requires a WM folder available. 2: just uses WM probability maps from"
@@ -55,7 +56,8 @@ exit 1
 method=1;
 template="${FSLDIR}/MNI152_T1_1mm.nii.gz"
 atropos_method=1;
-ants_number=4
+ants_number=4;
+mrf=0.3;
 while getopts ":hc:t:w:n" OPT
 
 do
@@ -94,6 +96,11 @@ do
   n) # getopts issues an error message
 
    ants_number=$OPTARG
+
+   ;;
+  f) # getopts issues an error message
+
+   mrf=$OPTARG
 
    ;;
   \?) # getopts issues an error message
@@ -141,14 +148,14 @@ do
 subname=`echo ${a%_*}`
 fslmaths ${a} -bin ${subname}_mask
 if [ ${#atropos_method} -eq 1 ] ; then
-Atropos -d 3 -a ${a} -x  ${subname}_mask.nii.gz -i Kmeans[2] -m [0.4,1x1x1] -o [segmentation.nii.gz, ${subname}_%02d.nii.gz]
+Atropos -d 3 -a ${a} -x  ${subname}_mask.nii.gz -i Kmeans[2] -m [${mrf},1x1x1] -o [segmentation.nii.gz, ${subname}_%02d.nii.gz]
 
 elif  [ ${atropos_method} -eq 0 ]]
 then
 cp ${out_dir}/ODI ${out_dir}/FA/FA/${subname}_prior02.nii.gz
 fslmaths ${subname}_mask.nii.gz -sub ${subname}_prior02.nii.gz ${subname}_prior01.nii.gz
 
-Atropos -d 3 -a ${a} -x  ${subname}_mask.nii.gz --i PriorProbabilityImages[2,wm.diff_%02d.nii.gz,0.2] -m [0.3,1x1x1] -o [segmentation.nii.gz, ${subname}_%02d.nii.gz]
+Atropos -d 3 -a ${a} -x  ${subname}_mask.nii.gz --i PriorProbabilityImages[2,wm.diff_%02d.nii.gz,0.2] -m [${mrf},1x1x1] -o [segmentation.nii.gz, ${subname}_%02d.nii.gz]
 
 fslmaths ${subname}_02.nii.gz -thr 0.2 -bin mask
 ImageMath 3 mask.nii.gz FillHoles mask.nii.gz
