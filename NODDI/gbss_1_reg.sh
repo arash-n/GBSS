@@ -140,9 +140,14 @@ Atropos -d 3 -a ${a} -x  ${subname}_mask.nii.gz -i Kmeans[2] -m [0.4,1x1x1] -o [
 elif  [ ${atropos_method} -eq 0 ]]
 then
 cp ${out_dir}/ODI ${out_dir}/FA/FA/${subname}_prior02.nii.gz
-fslmaths ${subname}_mask.nii.gz -sub ${subname}_prior02.nii.gz -bin ${subname}_prior01.nii.gz
+fslmaths ${subname}_mask.nii.gz -sub ${subname}_prior02.nii.gz ${subname}_prior01.nii.gz
 
 Atropos -d 3 -a ${a} -x  ${subname}_mask.nii.gz --i PriorProbabilityImages[2,wm.diff_%02d.nii.gz,0.2] -m [0.3,1x1x1] -o [segmentation.nii.gz, ${subname}_%02d.nii.gz]
+
+fslmaths ${subname}_02.nii.gz -thr 0.2 -bin mask
+ImageMath 3 mask.nii.gz FillHoles mask.nii.gz
+
+fslmaths mask -mul ${subname}_prior02.nii.gz -add ${subname}_02.nii.gz
 
 elif  [ ${atropos_method} -eq 2 ]]
 
