@@ -42,6 +42,7 @@ echo "    -w:  to use prior white matter probability maps in the diffusion space
 echo "         uses Atropos Kmeans as the priors; 0: uses input prior probability maps in the."
 echo "         This option requires a WM folder available. 2: just uses WM probability maps from"
 echo "         T1w images.)"
+echo "    -n:  Number of iterations in buildtemplateparallel.sh"
 echo "    -h:  prints this message"
 
 echo ""
@@ -54,7 +55,8 @@ exit 1
 method=1;
 template="${FSLDIR}/MNI152_T1_1mm.nii.gz"
 atropos_method=1;
-while getopts ":hc:t:w" OPT
+ants_number=4
+while getopts ":hc:t:w:n" OPT
 
 do
 
@@ -89,7 +91,11 @@ do
    atropos_method=$OPTARG
 
    ;;
+  n) # getopts issues an error message
 
+   ants_number=$OPTARG
+
+   ;;
   \?) # getopts issues an error message
 
     usage
@@ -187,7 +193,7 @@ then
 
 echo "OPTION 1: Creating Template Image"
 
-buildtemplateparallel.sh  -d 3 -j 1 -o D1_ -n 0 -s MI -i 8 -m 30x50x20 -t GR -z $template  *_psuedoT1.nii.gz
+buildtemplateparallel.sh  -d 3 -j 1 -o D1_ -n 0 -s MI -i $ants_number -m 30x50x20 -t GR -z $template  *_psuedoT1.nii.gz
 
 fi
 
