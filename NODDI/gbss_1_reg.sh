@@ -40,7 +40,8 @@ echo "    -t:  input template file here. This will be used as the initial templa
 echo "         final template depending on -c option input."
 echo "    -w:  to use prior white matter probability maps in the diffusion space (1 [default]:"
 echo "         uses Atropos Kmeans as the priors; 0: uses input prior probability maps in the."
-echo "         This option requires a WM folder available."
+echo "         This option requires a WM folder available. 2: just uses WM probability maps from"
+echo "         T1w images.)"
 echo "    -h:  prints this message"
 
 echo ""
