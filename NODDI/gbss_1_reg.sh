@@ -53,7 +53,7 @@ exit 1
 method=1;
 template="${FSLDIR}/MNI152_T1_1mm.nii.gz"
 atropos_method=1;
-while getopts ":c:h:t:w:" OPT
+while getopts "c:ht:w" OPT
 
 do
 
