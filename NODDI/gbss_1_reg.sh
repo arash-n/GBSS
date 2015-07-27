@@ -77,25 +77,25 @@ do
 
    ;;
 
- t) # getopts issues an error message
+  t) # getopts issues an error message
 
    template=$OPTARG
 
    ;;
 
-w) # getopts issues an error message
+  w) # getopts issues an error message
 
    atropos_method=$OPTARG
 
    ;;
 
-\?) # getopts issues an error message
+  \?) # getopts issues an error message
 
-   usage
+    usage
 
-   exit 1
+    exit 1
 
-   ;;
+    ;;
 
  esac
 
