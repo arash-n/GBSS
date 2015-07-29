@@ -60,17 +60,11 @@ atropos_method=1;
 ants_number=4;
 mrf=0.3;
 prior=0.2;
-while getopts ":hc:t:w:n:f:p" OPT
+while getopts ":c:t:w:n:f:p:h" OPT
 
 do
 
  case $OPT in
-
-  h) #help
-
-   usage
-   exit 1;
-   ;;
 
   c) #template method
 
@@ -110,7 +104,13 @@ do
    prior=$OPTARG
 
    ;;
-  \?) # getopts issues an error message
+  h) #help
+
+   usage
+   exit 1;
+   ;;
+   
+  *) # getopts issues an error message
 
     usage
 
@@ -125,7 +125,8 @@ done
 echo "List of parameters:"
 echo "prior=$prior"
 echo "ANTS Method=$atropos_method"
-
+echo "Template File: $template"
+echo "MRF=$mrf"
 ###############################################################
 ################# PART 1.1: Making Directories ################
 ###############################################################
