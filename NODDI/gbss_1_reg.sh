@@ -60,65 +60,60 @@ atropos_method=1;
 ants_number=4;
 mrf=0.3;
 prior=0.2;
-while getopts ":c:t:w:n:f:p:h" OPT
+while getopts ":c:t:w:n:f:p:h" OPT; do
+   case $OPT in
 
-do
+     c) #template method
 
- case $OPT in
+          method=$OPTARG
 
-  c) #template method
+          if [[ ${#method} == 0 ]] ; then
 
-   method=$OPTARG
+          echo "Using a pre-existing template file..."
 
-   if [[ ${#method} == 0 ]] ; then
+          fi
 
-   echo "Using a pre-existing template file..."
+          ;;
 
-   fi
+     t) # getopts issues an error message
 
-   ;;
+          template=$OPTARG
 
-  t) # getopts issues an error message
+          ;;
 
-   template=$OPTARG
+     w) # getopts issues an error message
 
-   ;;
+          atropos_method=$OPTARG
 
-  w) # getopts issues an error message
+          ;;
+     n) # getopts issues an error message
 
-   atropos_method=$OPTARG
+          ants_number=$OPTARG
+          ;;
+     f) # getopts issues an error message
 
-   ;;
-  n) # getopts issues an error message
+          mrf=$OPTARG
 
-   ants_number=$OPTARG
+          ;;
+     p) # getopts issues an error message
 
-   ;;
-  f) # getopts issues an error message
+          prior=$OPTARG
 
-   mrf=$OPTARG
+          ;;
+     h) #help
 
-   ;;
-  p) # getopts issues an error message
+          usage
+          exit 1;
+          ;;
+     *) # getopts issues an error message
 
-   prior=$OPTARG
+           usage
 
-   ;;
-  h) #help
+           exit 1
 
-   usage
-   exit 1;
-   ;;
-   
-  *) # getopts issues an error message
+           ;;
 
-    usage
-
-    exit 1
-
-    ;;
-
- esac
+   esac
 
 done
 
