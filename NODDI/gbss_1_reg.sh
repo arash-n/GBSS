@@ -155,10 +155,13 @@ do
 subname=`echo ${a%_*}`
 fslmaths ${a} -bin ${subname}_mask
 if [ ${#atropos_method} -eq 1 ] ; then
+echo "Using FA images to estimate WM PVE"
 Atropos -d 3 -a ${a} -x  ${subname}_mask.nii.gz -i Kmeans[2] -m [${mrf},1x1x1] -o [segmentation.nii.gz, ${subname}_%02d.nii.gz]
 
 elif  [ ${atropos_method} -eq 0 ]]
 then
+echo "Combining FA images with WM-PVE estimated from structural images to estimate final WM PVE"
+
 cp ${out_dir}/ODI ${out_dir}/FA/FA/${subname}_prior02.nii.gz
 fslmaths ${subname}_mask.nii.gz -sub ${subname}_prior02.nii.gz ${subname}_prior01.nii.gz
 
@@ -172,6 +175,7 @@ fslmaths mask -mul ${subname}_prior02.nii.gz -add ${subname}_02.nii.gz
 elif  [ ${atropos_method} -eq 2 ]]
 
 then
+echo "Using WM-PVE estimated from the structural images as the ultimate WM-PVE"
 
 cp ${out_dir}/WM/${subname}.nii.gz ${subname}_02.nii.gz
 
