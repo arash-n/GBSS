@@ -122,6 +122,9 @@ do
 
 done
 
+echo "List of parameters:"
+echo "prior=$prior"
+echo "ANTS Method=$atropos_method"
 
 ###############################################################
 ################# PART 1.1: Making Directories ################
