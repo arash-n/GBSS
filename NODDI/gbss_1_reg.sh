@@ -32,7 +32,7 @@ echo "FA, CSF, ODI, fIC"
 echo "2) Each Folder should contain corresponding image files with the same subject name in all folders."
 echo "NOTE: Remove any underline (_) from your filenames."
 echo "Here is its usage:"
-echo "Usage: gbss_1_reg.sh input_directory [options]"
+echo "Usage: gbss_1_reg.sh [options] output_directory"
 echo ""
 echo "    -c:  To create or use a pre-existing template (1 [default]: creates a template;"
 echo "         0: use pre-existing template)"
@@ -51,7 +51,6 @@ echo ""
 exit 1
 }
 
-[ "$1" = "" ] && usage
 
 #Setting Defaults
 method=1;
@@ -117,18 +116,24 @@ while getopts ":c:t:w:n:f:p:h" OPT; do
 
 done
 
+shift $((OPTIND-1))
+out_dir=$1 #output directory
+
+[ "$out_dir" = "" ] && usage
+
 echo "List of parameters:"
 echo "prior=$prior"
 echo "ANTS Method=$atropos_method"
 echo "Template File: $template"
 echo "MRF=$mrf"
+echo "Output directory: $out_dir"
+
 ###############################################################
 ################# PART 1.1: Making Directories ################
 ###############################################################
 
 #making output directory/subdirectories for the analysis
 
-out_dir=$1 #output directory
 mkdir ${out_dir}/tmpsapce
 
 ###############################################################
