@@ -196,7 +196,10 @@ fslmaths ${subname}_WM_frac -add ${out_dir}/CSF/${subname} -sub 1 -mul -1 -thr 0
 fslmaths ${out_dir}/fIC/${subname} -thr 0.65 -bin -sub ${subname}_GM_frac -mul -1 -bin ${subname}_GM_frac
 
 #Discarding high FA voxels outside of the brain
+if [ ${atropos_method} -lt 2 ]
+then
 ImageMath 3 ${subname}_WM_l_component.nii.gz GetLargestComponent ${subname}_WM_frac.nii.gz
+fi
 
 fslmaths ${subname}_WM_frac -mul ${subname}_WM_l_component.nii.gz -mul 2 ${subname}_WM_con
 fslmaths ${subname}_GM_frac -mul 1 ${subname}_GM_con
