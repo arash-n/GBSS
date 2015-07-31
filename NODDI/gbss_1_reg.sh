@@ -268,6 +268,6 @@ a=`echo ${FAs} |cut -f1 -d"_"` # No "_" is permitted in the subject IDs
 
  fsl_sub antsApplyTransforms -i  ${out_dir}/ODI/${a}_m.nii.gz -d 3 -e 0 -n NearestNeighbor -r ${ref} -t ${out_dir}/${D1_folder}/*${a}_psuedoT1Warp.nii.gz -t ${out_dir}/${D1_folder}/*${a}_psuedoT1Affine.txt -o ${out_dir}/tmpspace/${a}_ODI.nii.gz --float
 
- fsl_sub antsApplyTransforms -i  ${out_dir}/CSF/${a}.nii.gz -d 3 -e 0 -n BSpline -r ${ref} -t ${out_dir}/${D1_folder}/*${a}_psuedoT1Warp.nii.gz -t ${out_dir}/${D1_folder}/*${a}_psuedoT1Affine.txt -o ${out_dir}/tmpspace/${a}_CSF.nii.gz --float
+ fsl_sub antsApplyTransforms -i  ${out_dir}/CSF/${a}.nii.gz -d 3 -e 0 -n NearestNeighbor -r ${ref} -t ${out_dir}/${D1_folder}/*${a}_psuedoT1Warp.nii.gz -t ${out_dir}/${D1_folder}/*${a}_psuedoT1Affine.txt -o ${out_dir}/tmpspace/${a}_CSF.nii.gz --float
 
 done
