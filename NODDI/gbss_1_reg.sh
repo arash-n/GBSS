@@ -173,7 +173,7 @@ fslmaths ${subname}_mask.nii.gz -sub ${subname}_prior02.nii.gz ${subname}_prior0
 Atropos -d 3 -a ${a} -x  ${subname}_mask.nii.gz --i PriorProbabilityImages[2,${subname}_prior%02d.nii.gz, ${prior}] -m [ ${mrf},1x1x1] -o [segmentation.nii.gz, ${subname}_%02d.nii.gz]
 
 fslmaths ${subname}_02.nii.gz -thr 0.2 -bin mask1
-ImageMath 3 mask1.nii.gz FillHoles mask2.nii.gz
+ImageMath 3 mask2.nii.gz FillHoles mask1.nii.gz
 
 fslmaths mask2 -sub mask1 -mul ${subname}_prior02.nii.gz -add ${subname}_02.nii.gz ${subname}_02.nii.gz
 
