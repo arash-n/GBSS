@@ -199,8 +199,7 @@ fslmaths ${out_dir}/fIC/${subname} -thr 0.65 -bin -sub 1 -mul -1 -mul ${subname}
 if [ ${atropos_method} -lt 2 ]
 then
 echo "Getting the Largest Component for WM fraction"
-ImageMath 3 ${subname}_WM_l_component.nii.gz GetLargestComponent ${subname}_WM_frac_mask.nii.gz
-fslmaths ${subname}_WM_frac_mask.nii.gz -mul ${subname}_WM_frac.nii.gz ${subname}_WM_frac.nii.gz
+ImageMath 3 ${subname}_WM_l_component.nii.gz GetLargestComponent ${subname}_WM_frac.nii.gz
 fi
 
 fslmaths ${subname}_WM_frac -mul ${subname}_WM_l_component.nii.gz -mul 2 ${subname}_WM_con
