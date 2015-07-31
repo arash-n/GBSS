@@ -20,7 +20,6 @@
 # You should have received a copy of the license along with this
 # work.  If not, see <http://creativecommons.org/licenses/by-nc/4.0/>.
 
-set -x
 usage() {
 echo ""
 echo "This script nonlinearly registers diffusion images to a template space."
@@ -144,6 +143,7 @@ echo "Starting TBSS preproc to discard the high intensity rim of the FA files...
 
 cd ${out_dir}/FA
 tbss_1_preproc *nii.gz
+set -x
 
 ###############################################################
 ### PART 1.3: GM/WM PVE estimation/Creating PseudoT1 Images ###
