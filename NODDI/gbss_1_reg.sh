@@ -193,7 +193,7 @@ fslmaths ${subname}_mask -mul ${out_dir}/fIC/${subname} ${out_dir}/fIC/${subname
 
 fslmaths ${subname}_WM_frac -add ${out_dir}/CSF/${subname} -sub 1 -mul -1 -thr 0 -mul ${subname}_mask  ${subname}_GM_frac 
 
-fslmaths ${out_dir}/fIC/${subname} -thr 0.65 -bin -sub 1 -mul -1 ${subname}_GM_frac -thr 0 ${subname}_GM_frac
+fslmaths ${out_dir}/fIC/${subname} -thr 0.65 -bin -sub 1 -mul -1 -mul ${subname}_GM_frac -thr 0 ${subname}_GM_frac
 
 #Discarding high FA voxels outside of the brain
 if [ ${atropos_method} -lt 2 ]
