@@ -20,7 +20,7 @@
 # You should have received a copy of the license along with this
 # work.  If not, see <http://creativecommons.org/licenses/by-nc/4.0/>.
 
-
+set -x
 usage() {
 echo ""
 echo "This script nonlinearly registers diffusion images to a template space."
