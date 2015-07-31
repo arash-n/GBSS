@@ -193,12 +193,14 @@ fslmaths ${subname}_mask -mul ${out_dir}/fIC/${subname} ${out_dir}/fIC/${subname
 
 fslmaths ${subname}_WM_frac -add ${out_dir}/CSF/${subname} -sub 1 -mul -1 -thr 0 -mul ${subname}_mask  ${subname}_GM_frac 
 
-fslmaths ${out_dir}/fIC/${subname} -thr 0.65 -bin -sub ${subname}_GM_frac -mul -1 -bin ${subname}_GM_frac
+fslmaths ${out_dir}/fIC/${subname} -thr 0.65 -bin -sub 1 -mul -1 ${subname}_GM_frac -thr 0 ${subname}_GM_frac
 
 #Discarding high FA voxels outside of the brain
 if [ ${atropos_method} -lt 2 ]
 then
-ImageMath 3 ${subname}_WM_l_component.nii.gz GetLargestComponent ${subname}_WM_frac.nii.gz
+echo "Getting the Largest Component for WM fraction"
+ImageMath 3 ${subname}_WM_l_component.nii.gz GetLargestComponent ${subname}_WM_frac_mask.nii.gz
+fslmaths ${subname}_WM_frac_mask.nii.gz -mul ${subname}_WM_frac.nii.gz ${subname}_WM_frac.nii.gz
 fi
 
 fslmaths ${subname}_WM_frac -mul ${subname}_WM_l_component.nii.gz -mul 2 ${subname}_WM_con
@@ -210,9 +212,9 @@ done
 ###############################################################
 ### PART 1.4.a: Creating Template/ Estimating Warp Fields  ####
 ###############################################################
-mkdir ${out_dir}/D1
-cp *_psuedoT1.nii.gz ${out_dir}/D1/
-cd ../D1
+mkdir ${out_dir}/FA/D1
+cp ${out_dir}/FA/FA/*_psuedoT1.nii.gz ${out_dir}/FA/D1/
+cd ${out_dir}/FA/D1
 
 if [ ${#method} == 1 ]
 then
