@@ -200,10 +200,11 @@ if [ ${atropos_method} -lt 2 ]
 then
 echo "Getting the Largest Component for WM fraction"
 ImageMath 3 ${subname}_WM_l_component.nii.gz GetLargestComponent ${subname}_WM_frac.nii.gz
+fslmaths ${subname}_WM_frac.nii.gz -bin -sub ${subname}_WM_l_component.nii.gz -thr 0 -bin ${subname}_rim
 fi
 
 fslmaths ${subname}_WM_frac -mul ${subname}_WM_l_component.nii.gz -mul 2 ${subname}_WM_con
-fslmaths ${subname}_GM_frac -mul 1 ${subname}_GM_con
+fslmaths ${subname}_GM_frac -sub ${subname}_rim -thr 0 -mul 1 ${subname}_GM_con
 fslmaths ${out_dir}/CSF/${subname} -mul 0 -add ${subname}_GM_con -add ${subname}_WM_con ${subname}_psuedoT1
 
 done
