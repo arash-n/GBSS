@@ -237,7 +237,7 @@ for a in *_psuedoT1.nii.gz
 do
 label=`${a%_*}`
 
-fsl_sub -N ANTS_${label} antsIntroduction.sh -d 3 -i ${a} -o ${label} -n 0 -s MI -m 30x50x20 -t GR -r /scratch/arash/NODDI/allPsych/FA/D1_series/D1_template.nii.gz  *_psuedoT1.nii.gz
+fsl_sub -N ANTS_${label} antsIntroduction.sh -d 3 -i ${a} -o ${label} -n 0 -s MI -m 30x50x20 -t GR -r /scratch/arash/NODDI/allPsych/FA/D1_series/D1_template.nii.gz
 
 done
 
