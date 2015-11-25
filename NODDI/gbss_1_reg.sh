@@ -51,6 +51,11 @@ exit 1
 }
 
 
+if [ -z "${FSLDIR}" ]; then
+  echo "FSLDIR is not set. Please load your FSL environment before continuing."
+  exit 1; 
+fi
+
 #Setting Defaults
 method=1;
 template="${FSLDIR}/MNI152_T1_1mm.nii.gz"
@@ -58,61 +63,18 @@ atropos_method=1;
 ants_number=4;
 mrf=0.3;
 prior=0.2;
+
 while getopts ":c:t:w:n:f:p:h" OPT; do
    case $OPT in
-
-     c) #template method
-
-          method=$OPTARG
-
-          if [[ ${#method} == 0 ]] ; then
-
-          echo "Using a pre-existing template file..."
-
-          fi
-
-          ;;
-
-     t) # getopts issues an error message
-
-          template=$OPTARG
-
-          ;;
-
-     w) # getopts issues an error message
-
-          atropos_method=$OPTARG
-
-          ;;
-     n) # getopts issues an error message
-
-          ants_number=$OPTARG
-          ;;
-     f) # getopts issues an error message
-
-          mrf=$OPTARG
-
-          ;;
-     p) # getopts issues an error message
-
-          prior=$OPTARG
-
-          ;;
-     h) #help
-
-          usage
-          exit 1;
-          ;;
-     *) # getopts issues an error message
-
-           usage
-
-           exit 1
-
-           ;;
-
+     c)  method=$OPTARG          ;;
+     t)  template=$OPTARG        ;;
+     w)  atropos_method=$OPTARG  ;;
+     n)  ants_number=$OPTARG     ;;
+     f)  mrf=$OPTARG             ;;
+     p)  prior=$OPTARG           ;;
+     h)  usage; exit 1           ;;
+     *)  usage; exit 1           ;;
    esac
-
 done
 
 shift $((OPTIND-1))
@@ -121,10 +83,11 @@ out_dir=$1 #output directory
 [ "$out_dir" = "" ] && usage
 
 echo "List of parameters:"
-echo "prior=$prior"
-echo "ANTS Method=$atropos_method"
-echo "Template File: $template"
-echo "MRF=$mrf"
+echo "Template method:  $method"
+echo "ANTS Method:      $atropos_method"
+echo "Prior:            $prior"
+echo "Template File:    $template"
+echo "MRF:              $mrf"
 echo "Output directory: $out_dir"
 
 ###############################################################
@@ -132,8 +95,7 @@ echo "Output directory: $out_dir"
 ###############################################################
 
 #making output directory/subdirectories for the analysis
-
-mkdir ${out_dir}/tmpsapce
+mkdir ${out_dir}/tmpspace -p   # -p makes the folder, and parents 
 
 ###############################################################
 ################## PART 1.2: tbss_1_preproc ###################
