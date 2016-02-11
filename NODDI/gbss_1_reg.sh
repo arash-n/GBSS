@@ -133,7 +133,7 @@ echo "Output directory: $out_dir"
 
 #making output directory/subdirectories for the analysis
 
-mkdir ${out_dir}/tmpsapce
+mkdir ${out_dir}/tmpspace
 
 ###############################################################
 ################## PART 1.2: tbss_1_preproc ###################
