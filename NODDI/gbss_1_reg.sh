@@ -205,7 +205,7 @@ fi
 
 fslmaths ${subname}_WM_frac -mul ${subname}_WM_l_component.nii.gz -mul 2 ${subname}_WM_con
 fslmaths ${subname}_GM_frac -sub ${subname}_rim -thr 0 -mul 1 ${subname}_GM_con
-fslmaths ${out_dir}/CSF/${subname} -mul 0 -add ${subname}_GM_con -add ${subname}_WM_con ${subname}_psuedoT1
+fslmaths ${out_dir}/CSF/${subname} -mul 0 -add ${subname}_GM_con -add ${subname}_WM_con ${subname}_pseudoT1
 
 done
 
@@ -213,7 +213,7 @@ done
 ### PART 1.4.a: Creating Template/ Estimating Warp Fields  ####
 ###############################################################
 mkdir ${out_dir}/FA/D1
-cp ${out_dir}/FA/FA/*_psuedoT1.nii.gz ${out_dir}/FA/D1/
+cp ${out_dir}/FA/FA/*_pseudoT1.nii.gz ${out_dir}/FA/D1/
 cd ${out_dir}/FA/D1
 
 if [ ${#method} == 1 ]
