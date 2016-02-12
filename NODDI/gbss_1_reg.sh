@@ -186,7 +186,7 @@ cp ${out_dir}/WM/${subname}.nii.gz ${subname}_02.nii.gz
 
 fi
 
-fslmaths  ${subname}_02 ${subname}_WM_frac
+immv  ${subname}_02 ${subname}_WM_frac
 
 fslmaths ${subname}_mask -mul ${out_dir}/ODI/${subname} ${out_dir}/ODI/${subname}_m
 fslmaths ${subname}_mask -mul ${out_dir}/fIC/${subname} ${out_dir}/fIC/${subname}_m
