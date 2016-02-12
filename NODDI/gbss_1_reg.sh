@@ -204,8 +204,8 @@ fslmaths ${subname}_WM_frac.nii.gz -bin -sub ${subname}_WM_l_component.nii.gz -t
 fi
 
 fslmaths ${subname}_WM_frac -mul ${subname}_WM_l_component.nii.gz -mul 2 ${subname}_WM_con
-fslmaths ${subname}_GM_frac -sub ${subname}_rim -thr 0 -mul 1 ${subname}_GM_con
-fslmaths ${out_dir}/CSF/${subname} -mul 0 -add ${subname}_GM_con -add ${subname}_WM_con ${subname}_pseudoT1
+fslmaths ${subname}_GM_frac -thr 0 -mul 1 ${subname}_GM_con
+fslmaths ${subname}_GM_con -add ${subname}_WM_con ${subname}_pseudoT1
 
 done
 
