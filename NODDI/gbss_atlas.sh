@@ -1,8 +1,21 @@
 
 
+usage() {
+echo ""
+echo "You need to provide the GBSS output directory."
+echo "    e.g gbss_atlas.sh gbss_out_dir"
+
+echo ""
+exit 1
+}
+
 out_dir=$1
+
+[ "$out_dir" = "" ] && usage
+
+
 mkdir $out_dir/atlas
-cd 
+cd $out_dir/atlas
 cp $FSLDIR/data/standard/MNI152_T1_1mm_brain.nii.gz $out_dir/MNI.nii.gz
 
 cp $FSLDIR/data/atlases/HarvardOxford/HarvardOxford-sub-maxprob-thr25-1mm.nii.gz ./
