@@ -46,6 +46,7 @@ cp $FSLDIR/data/atlases/HarvardOxford/HarvardOxford-sub-maxprob-thr25-1mm.nii.gz
 cp $FSLDIR/data/atlases/HarvardOxford/HarvardOxford-cort-maxprob-thr25-1mm.nii.gz ./
 cp $FSLDIR/data/atlases/MNI/MNI-maxprob-thr25-1mm.nii.gz ./
 
+cp $out_dir/FA/D1/D1_template.nii.gz $out_dir/atlas
 
 ANTS 3 -m MI[D1_template.nii.gz,MNI.nii.gz,1,32] -o MNI_in_temp -i 30x90x20 -r Gauss[3,1] -t Elast[3]
 
