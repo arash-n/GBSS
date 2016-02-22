@@ -92,11 +92,11 @@ WarpImageMultiTransform 3 ${out_dir}/atlas/atlas_subHOx_in_temp_space.nii.gz ${s
 if [ ! "${other_atlas}" = "" ]
 then
 WarpImageMultiTransform 3 ${out_dir}/atlas/atlas_${name}_in_temp_space.nii.gz ${subname}_${name}.nii.gz  --use-NN -R ${a} -i ${out_dir}/FA/D1/D1_${subname}_psuedoT1Affine.txt ${out_dir}/FA/D1/D1_${subname}_psuedoT1InverseWarp.nii.gz
-fslmaths ${a:0:4}_GM_frac -thr ${thr} -bin -mul ${a:0:4}_${name}.nii.gz ${a:0:4}_${name}_${thr}.nii.gz
+fslmaths ${subname}_GM_frac -thr ${thr} -bin -mul ${subname}_${name}_atl.nii.gz ${subname}_${name}_atl_${thr}.nii.gz
 fi
 
-fslmaths ${a:0:4}_GM_frac -thr ${thr} -bin -mul ${a:0:4}_MNI.nii.gz ${a:0:4}_MNI_${thr}.nii.gz
-fslmaths ${a:0:4}_GM_frac -thr ${thr} -bin -mul ${a:0:4}_cHOX.nii.gz ${a:0:4}_cHOX_${thr}.nii.gz
-fslmaths ${a:0:4}_GM_frac -thr ${thr} -bin -mul ${a:0:4}_sHOX.nii.gz ${a:0:4}_sHOX_${thr}.nii.gz
+fslmaths ${subname}_GM_frac -thr ${thr} -bin -mul ${subname}_MNI_atl.nii.gz ${subname}_MNI_atl_${thr}.nii.gz
+fslmaths ${subname}_GM_frac -thr ${thr} -bin -mul ${subname}_cHOX_atl.nii.gz ${subname}_atl_cHOX_${thr}.nii.gz
+fslmaths ${subname}_GM_frac -thr ${thr} -bin -mul ${subname}_sHOX_atl.nii.gz ${subname}_sHOX_atl_${thr}.nii.gz
 
 done
