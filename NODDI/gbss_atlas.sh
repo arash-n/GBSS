@@ -83,15 +83,15 @@ subname=`echo ${a%_*}`
 
 echo "Creating ROIs for ${subname} ...."
 
-WarpImageMultiTransform 3 ${out_dir}/atlas/atlas_MNI_in_temp_space.nii.gz ${subname}_MNI.nii.gz  --use-NN -R ${a} -i ${out_dir}/FA/D1/D1_${subname}_psuedoT1Affine.txt ${out_dir}/FA/D1/D1_${subname}_psuedoT1InverseWarp.nii.gz
+WarpImageMultiTransform 3 ${out_dir}/atlas/atlas_MNI_in_temp_space.nii.gz ${subname}_MNI.nii.gz  --use-NN -R ${a} -i ${out_dir}/FA/D1/D1_${subname}_pseudoT1Affine.txt ${out_dir}/FA/D1/D1_${subname}_pseudoT1InverseWarp.nii.gz
 
-WarpImageMultiTransform 3 ${out_dir}/atlas/atlas_cortHOx_in_temp_space.nii.gz ${subname}_cHOX.nii.gz  --use-NN -R ${a} -i ${out_dir}/FA/D1/D1_${subname}_psuedoT1Affine.txt ${out_dir}/FA/D1/D1_${subname}_psuedoT1InverseWarp.nii.gz
+WarpImageMultiTransform 3 ${out_dir}/atlas/atlas_cortHOx_in_temp_space.nii.gz ${subname}_cHOX.nii.gz  --use-NN -R ${a} -i ${out_dir}/FA/D1/D1_${subname}_pseudoT1Affine.txt ${out_dir}/FA/D1/D1_${subname}_pseudoT1InverseWarp.nii.gz
 
-WarpImageMultiTransform 3 ${out_dir}/atlas/atlas_subHOx_in_temp_space.nii.gz ${subname}_sHOX.nii.gz  --use-NN -R ${a} -i ${out_dir}/FA/D1/D1_${subname}_psuedoT1Affine.txt ${out_dir}/FA/D1/D1_${subname}_psuedoT1InverseWarp.nii.gz
+WarpImageMultiTransform 3 ${out_dir}/atlas/atlas_subHOx_in_temp_space.nii.gz ${subname}_sHOX.nii.gz  --use-NN -R ${a} -i ${out_dir}/FA/D1/D1_${subname}_pseudoT1Affine.txt ${out_dir}/FA/D1/D1_${subname}_pseudoT1InverseWarp.nii.gz
 
 if [ ! "${other_atlas}" = "" ]
 then
-WarpImageMultiTransform 3 ${out_dir}/atlas/atlas_${name}_in_temp_space.nii.gz ${subname}_${name}.nii.gz  --use-NN -R ${a} -i ${out_dir}/FA/D1/D1_${subname}_psuedoT1Affine.txt ${out_dir}/FA/D1/D1_${subname}_psuedoT1InverseWarp.nii.gz
+WarpImageMultiTransform 3 ${out_dir}/atlas/atlas_${name}_in_temp_space.nii.gz ${subname}_${name}.nii.gz  --use-NN -R ${a} -i ${out_dir}/FA/D1/D1_${subname}_pseudoT1Affine.txt ${out_dir}/FA/D1/D1_${subname}_pseudoT1InverseWarp.nii.gz
 fslmaths ${subname}_GM_frac -thr ${thr} -bin -mul ${subname}_${name}_atl.nii.gz ${subname}_${name}_atl_${thr}.nii.gz
 fi
 
