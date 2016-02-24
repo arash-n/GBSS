@@ -22,8 +22,6 @@
 
 out_dir=$1
 atlas=$2 
-[ "$atlas" = "" ] && usage
-
 
 usage() {
 echo ""
@@ -33,6 +31,7 @@ echo "    e.g gbss_stats.sh gbss_out_dir atlas_name"
 echo ""
 exit 1
 }
+[ "$atlas" = "" ] && usage
 
 cd $out_dir/FA/FA
 
