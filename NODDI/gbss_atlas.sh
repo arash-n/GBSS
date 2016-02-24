@@ -96,7 +96,7 @@ fslmaths ${subname}_GM_frac -thr ${thr} -bin -mul ${subname}_${name}_atl.nii.gz 
 fi
 
 fslmaths ${subname}_GM_frac -thr ${thr} -bin -mul ${subname}_MNI_atl.nii.gz ${subname}_MNI_atl_${thr}.nii.gz
-fslmaths ${subname}_GM_frac -thr ${thr} -bin -mul ${subname}_cHOX_atl.nii.gz ${subname}_atl_cHOX_${thr}.nii.gz
+fslmaths ${subname}_GM_frac -thr ${thr} -bin -mul ${subname}_cHOX_atl.nii.gz ${subname}_cHOX_atl_${thr}.nii.gz
 fslmaths ${subname}_GM_frac -thr ${thr} -bin -mul ${subname}_sHOX_atl.nii.gz ${subname}_sHOX_atl_${thr}.nii.gz
 
 done
