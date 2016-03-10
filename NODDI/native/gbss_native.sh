@@ -47,8 +47,9 @@ exit 1
 
 #Setting Defaults
 thr_sub=100
-thr_right=1000
-thr_left=2000
+thr_right=2000
+thr_left=1000
+diff=$(echo "$thr_right - $thr_left"|bc)
 sigma=3
 thr=0.8
 temp_number=$RANDOM
@@ -103,14 +104,14 @@ done
 
 ### Skeletonization of GM_fraction in DWI space
 tbss_skeleton -i $gm_frac -o ${gm_frac}_skel
+fslmaths ${gm_frac}_skel -thr $thr -bin ${gm_frac}_skel_mask
 #imcp  ${gm_frac}_skel ${gm_frac}_skel_1
 fslmaths $label_file -uthr $thr_sub -mul 100 -sub ${gm_frac}_skel -mul -1 -thr 0 ${gm_frac}_skel
 fslmaths $label_file -mul 0 ${temp_number}_zero
 
-k=$thr_right;j=0
+k=$thr_left;j=0
 
-mkdir ${temp_number}_right
-mkdir ${temp_number}_left
+mkdir ${temp_number}
 
 while true
 then
@@ -118,13 +119,20 @@ then
 min=$(echo "$k - 0.5"|bc)
 max=$(echo "$k + 0.5"|bc)
 
-tmp_val=`printf "%03d" $j`
-fslmaths $label_file -thr $min -uthr $max -bin ${temp_number}_right/mask_${tmp_val}
+min_r=$(echo "$min + $diff"|bc)
+max_r=$(echo "$max + $diff"|bc)
 
-volume_mask=`fslstats ${temp_number}_right/mask_${tmp_val} -V|awk '{print $1}'`
+tmp_val=`printf "%03d" $j`
+fslmaths $label_file -thr $min -uthr $max -bin ${temp_number}/mask_l_${tmp_val}
+fslmaths $label_file -thr $min_r -uthr $max_r -bin ${temp_number}/mask_r_${tmp_val}
+
+volume_mask=`fslstats ${temp_number}/mask_${tmp_val} -V|awk '{print $1}'`
 
 if [ $volume_mask -eq 0 ]
-rm ${temp_number}_right/mask_${tmp_val}
+rm ${temp_number}/mask_${tmp_val}
+fslmerge -t ${temp_number}_all_mask zero ${temp_number}/mask_l* mask_r*
+fslmaths  ${temp_number}_all_mask -s $sigma ${temp_number}_all_mask_smooth
+
 break
 fi
 
