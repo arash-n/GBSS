@@ -105,10 +105,12 @@ done
 tbss_skeleton -i $gm_frac -o ${gm_frac}_skel
 #imcp  ${gm_frac}_skel ${gm_frac}_skel_1
 fslmaths $label_file -uthr $thr_sub -mul 100 -sub ${gm_frac}_skel -mul -1 -thr 0 ${gm_frac}_skel
-fslmaths $label_file -mul 0 zero
+fslmaths $label_file -mul 0 ${temp_number}_zero
 
 k=$thr_right;j=0
-mkdir tmp_right
+
+mkdir ${temp_number}_right
+mkdir ${temp_number}_left
 
 while true
 then
@@ -117,12 +119,12 @@ min=$(echo "$k - 0.5"|bc)
 max=$(echo "$k + 0.5"|bc)
 
 tmp_val=`printf "%03d" $j`
-fslmaths $label_file -thr $min -uthr $max -bin tmp_right/mask_${tmp_val}
+fslmaths $label_file -thr $min -uthr $max -bin ${temp_number}_right/mask_${tmp_val}
 
-volume_mask=`fslstats tmp_right/mask_${tmp_val} -V|awk '{print $1}'`
+volume_mask=`fslstats ${temp_number}_right/mask_${tmp_val} -V|awk '{print $1}'`
 
 if [ $volume_mask -eq 0 ]
-rm tmp_right/mask_${tmp_val}
+rm ${temp_number}_right/mask_${tmp_val}
 break
 fi
 
@@ -131,3 +133,4 @@ k=$((k+1))
 
 )
 done
+
