@@ -52,6 +52,7 @@ thr_left=1000
 diff=$(echo "$thr_right - $thr_left"|bc)
 sigma=3
 thr=0.8
+max_rois=70
 temp_number=$RANDOM
 
 #Input files
@@ -114,7 +115,7 @@ k=$thr_left;j=0
 
 mkdir ${temp_number}
 
-while true
+while [ $j -lt $max_rois ]
 do
 min=$(echo "$k - 0.5"|bc)
 max=$(echo "$k + 0.5"|bc)
@@ -123,21 +124,14 @@ min_r=$(echo "$min + $diff"|bc)
 max_r=$(echo "$max + $diff"|bc)
 
 tmp_val=`printf "%03d" $j`
-fslmaths $label_file -thr $min -uthr $max -bin ${temp_number}/mask_l_${tmp_val}
-fslmaths $label_file -thr $min_r -uthr $max_r -bin ${temp_number}/mask_r_${tmp_val}
+fslmaths $label_file -thr $min -uthr $max -bin ${temp_number}/mask_${tmp_val}_r
+fslmaths $label_file -thr $min_r -uthr $max_r -bin ${temp_number}/mask_${tmp_val}_l
 
-volume_mask=`fslstats ${temp_number}/mask_r_${tmp_val} -V|awk '{print $1}'`
 j=$((j+1))
 k=$((k+1))
 
-if [ $volume_mask == 0 ]
-then
-rm ${temp_number}/mask_${tmp_val}
-fslmerge -t ${temp_number}_all_mask zero ${temp_number}/mask_l* mask_r*
-fslmaths  ${temp_number}_all_mask -s $sigma ${temp_number}_all_mask_smooth
-fslmaths  ${temp_number}_all_mask_smooth -Tmax -mul ${gm_frac}_skel_mask ${gm_frac}_skel_labeled
-break
-fi
-
 done
 
+fslmerge -t ${temp_number}_all_mask zero ${temp_number}/mask*
+fslmaths  ${temp_number}_all_mask -s $sigma ${temp_number}_all_mask_smooth
+fslmaths  ${temp_number}_all_mask_smooth -Tmax -mul ${gm_frac}_skel_mask ${gm_frac}_skel_labeled
