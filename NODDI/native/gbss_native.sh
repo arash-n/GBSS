@@ -52,7 +52,7 @@ thr_left=1000
 diff=$(echo "$thr_right - $thr_left"|bc)
 sigma=3
 thr=0.8
-max_rois=70
+max_rois=60
 temp_number=$RANDOM
 
 #Input files
@@ -102,7 +102,7 @@ while getopts ":s:r:l:g:t:h" OPT; do
    esac
 
 done
-set -x
+#set -x
 
 ### Skeletonization of GM_fraction in DWI space
 tbss_skeleton -i $gm_frac -o ${gm_frac}_skel
