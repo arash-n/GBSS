@@ -23,7 +23,6 @@ echo ""
 echo "This script depends on FSL v4.1.9 (or higher) and creates labeled GM skeleton in the native diffusion space."
 echo ""
 echo "Here is the usage:"
-echo "Usage:"
 echo "gbss_native.sh GM_frac_in_dwi.nii.gz label_file_in_dwi.nii.gz [options]"
 echo ""
 echo "These are all mandatory:"
@@ -44,36 +43,17 @@ exit 1
 
 [ "$2" = "" ] && usage
 
-
+#Setting Defaults
 thr_sub=100
 thr_right=1000
 thr_left=2000
 
-#Setting Defaults
+#Input files
+gm_frac=$1
+label_file=$2
 
-while getopts ":i:a:s:r:l:h" OPT; do
+while getopts ":s:r:l:h" OPT; do
    case $OPT in
-
-     i) #template method
-
-          gm_frac=$OPTARG
-
-          if [[ ${#gm_frac} == 0 ]] ; then
-
-          usage
-
-          fi
-
-          ;;
-
-     a) # getopts issues an error message
-
-          label=$OPTARG
-          if [[ ${#label} == 0 ]] ; then
-          usage
-          fi
-
-          ;;
 
      s) # getopts issues an error message
 
