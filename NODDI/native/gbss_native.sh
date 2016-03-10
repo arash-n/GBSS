@@ -51,6 +51,7 @@ thr_right=1000
 thr_left=2000
 sigma=3
 thr=0.8
+temp_number=$RANDOM
 
 #Input files
 gm_frac=`imglob $1`
@@ -122,7 +123,6 @@ volume_mask=`fslstats tmp_right/mask_${tmp_val} -V|awk '{print $1}'`
 
 if [ $volume_mask -eq 0 ]
 rm tmp_right/mask_${tmp_val}
-fslmerge -t all_right_mask zero tmp_right/mask_*gz
 break
 fi
 
