@@ -116,7 +116,6 @@ mkdir ${temp_number}
 
 while true
 do
-(
 min=$(echo "$k - 0.5"|bc)
 max=$(echo "$k + 0.5"|bc)
 
@@ -140,6 +139,5 @@ fslmaths  ${temp_number}_all_mask_smooth -Tmax -mul ${gm_frac}_skel_mask ${gm_fr
 break
 fi
 
-)
 done
 
