@@ -91,4 +91,30 @@ done
 tbss_skeleton -i $gm_frac -o ${gm_frac}_skel
 #imcp  ${gm_frac}_skel ${gm_frac}_skel_1
 fslmaths $label_file -uthr $thr_sub -mul 100 -sub ${gm_frac}_skel -mul -1 -thr 0 ${gm_frac}_skel
+fslmaths $label_file -mul 0 zero
 
+k=$thr_right;j=0
+mkdir tmp_right
+
+while true
+then
+(
+min=$(echo "$k - 0.5"|bc)
+max=$(echo "$k + 0.5"|bc)
+
+tmp_val=`printf "%03d" $j`
+fslmaths $label_file -thr $min -uthr $max -bin tmp_right/mask_${tmp_val}
+
+volume_mask=`fslstats tmp_right/mask_${tmp_val} -V|awk '{print $1}'`
+
+if [ $volume_mask -eq 0 ]
+rm tmp_right/mask_${tmp_val}
+fslmerge -t all_right_mask zero tmp_right/mask_*gz
+break
+fi
+
+j=$((j+1))
+k=$((k+1))
+
+)
+done
