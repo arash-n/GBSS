@@ -114,7 +114,7 @@ k=$thr_left;j=0
 mkdir ${temp_number}
 
 while true
-then
+do
 (
 min=$(echo "$k - 0.5"|bc)
 max=$(echo "$k + 0.5"|bc)
