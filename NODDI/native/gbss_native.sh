@@ -17,7 +17,6 @@
 #
 # You should have received a copy of the license along with this
 # work.  If not, see <http://creativecommons.org/licenses/by-nc/4.0/>.
-set -x
 
 usage() {
 echo ""
@@ -102,6 +101,7 @@ while getopts ":s:r:l:g:t:h" OPT; do
    esac
 
 done
+set -x
 
 ### Skeletonization of GM_fraction in DWI space
 tbss_skeleton -i $gm_frac -o ${gm_frac}_skel
