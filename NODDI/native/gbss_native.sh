@@ -49,8 +49,8 @@ thr_right=1000
 thr_left=2000
 
 #Input files
-gm_frac=$1
-label_file=$2
+gm_frac=`imglob $1`
+label_file=`imglob $2`
 
 while getopts ":s:r:l:h" OPT; do
    case $OPT in
@@ -86,3 +86,9 @@ while getopts ":s:r:l:h" OPT; do
    esac
 
 done
+
+### Skeletonization of GM_fraction in DWI space
+tbss_skeleton -i $gm_frac -o ${gm_frac}_skel
+#imcp  ${gm_frac}_skel ${gm_frac}_skel_1
+fslmaths $label_file -uthr $thr_sub -mul 100 -sub ${gm_frac}_skel -mul -1 -thr 0 ${gm_frac}_skel
+
