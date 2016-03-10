@@ -134,4 +134,4 @@ done
 
 fslmerge -t ${temp_number}_all_mask ${temp_number}_zero ${temp_number}/mask*
 fslmaths  ${temp_number}_all_mask -s $sigma ${temp_number}_all_mask_smooth
-fslmaths  ${temp_number}_all_mask_smooth -Tmax -mul ${gm_frac}_skel_mask ${gm_frac}_skel_labeled
+fslmaths  ${temp_number}_all_mask_smooth -Tmaxn -mul ${gm_frac}_skel_mask ${gm_frac}_skel_labeled
