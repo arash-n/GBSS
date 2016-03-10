@@ -28,27 +28,27 @@ echo "Usage: gbss_native.sh -i GM_frac_in_dwi.nii.gz -a label_file_in_dwi.nii.gz
 echo "-r right_cortical_thr -l left_cortical_thr"
 echo ""
 echo "These are all mandatory:"
-echo "    -i:  Input gray matter fraction in the native diffusion space." 
-echo ""
+echo "    -i:  Input gray matter fraction (PVE) in the native diffusion space." 
 echo "    -a:  Label file including subcortical, left, and right cortical labels in the"
 echo "         native diffusion space"
-echo "    -s:  Maximum threshold to discard voxels in the "
-echo "    -w:  To use prior white matter probability maps in the diffusion space (1 [default]:"
-echo "         uses Atropos Kmeans as the priors; 0: uses input prior probability maps in the."
-echo "         This option requires a WM folder available. 2: just uses WM probability maps from"
-echo "         T1w images.)"
-echo "    -p:  Prior weighting in Atropos (between 0-1 [if -w 0 is used])."
-echo "    -n:  Number of iterations in buildtemplateparallel.sh"
+echo "These are optional, if no input is provided the corresponding values from Freesurfer's aparc+aseg.mgz"
+echo "    -s:  Maximum threshold to discard voxels in the subcortical structures in the label file [Freesurfer: 100]."
+echo "    -r:  Minimum value of the right cortical structures in the label file [Freesurfer: 1000]."
+echo "    -l:  Minimum value of the left cortical structures in the label file [Freesurfer: 2000]."
+echo ""
 echo "    -h:  Prints this message"
 
 echo ""
 exit 1
 }
 
+thr_sub=100
+thr_right=1000
+thr_left=2000
 
 #Setting Defaults
 
-while getopts ":i:t:w:n:f:p:h" OPT; do
+while getopts ":i:a:s:r:l:h" OPT; do
    case $OPT in
 
      i) #template method
@@ -63,7 +63,7 @@ while getopts ":i:t:w:n:f:p:h" OPT; do
 
           ;;
 
-     t) # getopts issues an error message
+     a) # getopts issues an error message
 
           label=$OPTARG
           if [[ ${#label} == 0 ]] ; then
@@ -72,25 +72,21 @@ while getopts ":i:t:w:n:f:p:h" OPT; do
 
           ;;
 
-     w) # getopts issues an error message
+     s) # getopts issues an error message
 
-          atropos_method=$OPTARG
-
-          ;;
-     n) # getopts issues an error message
-
-          ants_number=$OPTARG
-          ;;
-     f) # getopts issues an error message
-
-          mrf=$OPTARG
+          thr_sub=$OPTARG
 
           ;;
-     p) # getopts issues an error message
+     r) # getopts issues an error message
 
-          prior=$OPTARG
+          thr_right=$OPTARG
+          ;;
+     l) # getopts issues an error message
+
+          thr_left=$OPTARG
 
           ;;
+
      h) #help
 
           usage
