@@ -132,6 +132,7 @@ if [ $volume_mask -eq 0 ]
 rm ${temp_number}/mask_${tmp_val}
 fslmerge -t ${temp_number}_all_mask zero ${temp_number}/mask_l* mask_r*
 fslmaths  ${temp_number}_all_mask -s $sigma ${temp_number}_all_mask_smooth
+fslmaths  ${temp_number}_all_mask_smooth -Tmax -mul ${gm_frac}_skel_mask ${gm_frac}_skel_labeled
 
 break
 fi
