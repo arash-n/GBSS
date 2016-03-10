@@ -34,6 +34,8 @@ echo "These are optional, if no input is provided the corresponding values from 
 echo "    -s:  Maximum threshold to discard voxels in the subcortical structures in the label file [Freesurfer: 100]."
 echo "    -r:  Minimum value of the right cortical structures in the label file [Freesurfer: 1000]."
 echo "    -l:  Minimum value of the left cortical structures in the label file [Freesurfer: 2000]."
+echo "    -g:  Gaussian Kernel size [sigma=3]."
+echo "    -t:  GM probability threshold [GM PVE > 0.8]"
 echo ""
 echo "    -h:  Prints this message"
 
@@ -47,12 +49,14 @@ exit 1
 thr_sub=100
 thr_right=1000
 thr_left=2000
+sigma=3
+thr=0.8
 
 #Input files
 gm_frac=`imglob $1`
 label_file=`imglob $2`
 
-while getopts ":s:r:l:h" OPT; do
+while getopts ":s:r:l:g:t:h" OPT; do
    case $OPT in
 
      s) # getopts issues an error message
@@ -69,7 +73,16 @@ while getopts ":s:r:l:h" OPT; do
           thr_left=$OPTARG
 
           ;;
+     g) # getopts issues an error message
 
+          sigma=$OPTARG
+
+          ;;
+     t) # getopts issues an error message
+
+          thr=$OPTARG
+
+          ;;
      h) #help
 
           usage
