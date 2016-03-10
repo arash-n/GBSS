@@ -1,7 +1,7 @@
 #!/bin/bash
 #v 0.1 March 10th 2016
 #Arash Nazeri, Kimel Family Translational Imaging-Genetics Research Lab
-#This script depends on ANTs v2.1 and FSL v4.1.9 (or higher)
+#This script depends on FSL v4.1.9 (or higher)
 #
 #Developed at Kimel Family Translational Imaging Genetics Ressearch
 #Laboratory (TIGR), Research Imaging Centre, Campbell Family Mental
