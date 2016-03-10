@@ -23,13 +23,13 @@ echo ""
 echo "This script depends on FSL v4.1.9 (or higher) and creates labeled GM skeleton in the native diffusion space."
 echo ""
 echo "Here is the usage:"
-echo "Usage: gbss_native.sh -i GM_frac_in_dwi.nii.gz -a label_file_in_dwi.nii.gz -s subcortical_thr"
-echo "-r right_cortical_thr -l left_cortical_thr"
+echo "Usage:"
+echo "gbss_native.sh GM_frac_in_dwi.nii.gz label_file_in_dwi.nii.gz [options]"
 echo ""
 echo "These are all mandatory:"
-echo "    -i:  Input gray matter fraction (PVE) in the native diffusion space." 
-echo "    -a:  Label file including subcortical, left, and right cortical labels in the"
-echo "         native diffusion space"
+echo "    First input: gray matter fraction (PVE) in the native diffusion space." 
+echo "    Second input: label file including subcortical, left, and right cortical"
+echo "    labels in the native diffusion space"
 echo ""
 echo "These are optional, if no input is provided the corresponding values from Freesurfer's aparc+aseg.mgz"
 echo "    -s:  Maximum threshold to discard voxels in the subcortical structures in the label file [Freesurfer: 100]."
@@ -41,6 +41,9 @@ echo "    -h:  Prints this message"
 echo ""
 exit 1
 }
+
+[ "$2" = "" ] && Usage
+
 
 thr_sub=100
 thr_right=1000
