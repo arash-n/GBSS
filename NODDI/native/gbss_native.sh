@@ -42,7 +42,7 @@ echo ""
 exit 1
 }
 
-[ "$2" = "" ] && Usage
+[ "$2" = "" ] && usage
 
 
 thr_sub=100
