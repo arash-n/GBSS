@@ -127,7 +127,7 @@ tmp_val=`printf "%03d" $j`
 fslmaths $label_file -thr $min -uthr $max -bin ${temp_number}/mask_l_${tmp_val}
 fslmaths $label_file -thr $min_r -uthr $max_r -bin ${temp_number}/mask_r_${tmp_val}
 
-volume_mask=`fslstats ${temp_number}/mask_${tmp_val} -V|awk '{print $1}'`
+volume_mask=`fslstats ${temp_number}/mask_r_${tmp_val} -V|awk '{print $1}'`
 j=$((j+1))
 k=$((k+1))
 
