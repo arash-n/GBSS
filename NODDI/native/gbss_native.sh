@@ -128,19 +128,17 @@ fslmaths $label_file -thr $min -uthr $max -bin ${temp_number}/mask_l_${tmp_val}
 fslmaths $label_file -thr $min_r -uthr $max_r -bin ${temp_number}/mask_r_${tmp_val}
 
 volume_mask=`fslstats ${temp_number}/mask_${tmp_val} -V|awk '{print $1}'`
+j=$((j+1))
+k=$((k+1))
 
-if [ $volume_mask -eq 0 ]
+if [ $volume_mask == 0 ]
 then
 rm ${temp_number}/mask_${tmp_val}
 fslmerge -t ${temp_number}_all_mask zero ${temp_number}/mask_l* mask_r*
 fslmaths  ${temp_number}_all_mask -s $sigma ${temp_number}_all_mask_smooth
 fslmaths  ${temp_number}_all_mask_smooth -Tmax -mul ${gm_frac}_skel_mask ${gm_frac}_skel_labeled
-
 break
 fi
-
-j=$((j+1))
-k=$((k+1))
 
 )
 done
