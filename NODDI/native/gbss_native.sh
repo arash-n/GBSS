@@ -35,7 +35,7 @@ echo "    -s:  Maximum threshold to discard voxels in the subcortical structures
 echo "    -r:  Minimum value of the right cortical structures in the label file [Freesurfer: 1000]."
 echo "    -l:  Minimum value of the left cortical structures in the label file [Freesurfer: 2000]."
 echo "    -g:  Gaussian Kernel size [sigma=3]."
-echo "    -t:  GM probability threshold [GM PVE > 0.8]"
+echo "    -t:  GM probability threshold [GM PVE > 0.7]"
 echo ""
 echo "    -h:  Prints this message"
 
@@ -48,12 +48,15 @@ exit 1
 #Setting Defaults
 thr_sub=100
 thr_right=2000
-thr_left=1000
+thr_left=1000 #lowest value for left cortical ROIs
 diff=$(echo "$thr_right - $thr_left"|bc)
-sigma=3
-thr=0.8
+sigma=3 #smoothing kernel
+thr=0.7 #GM threshold
 max_rois=60
 temp_number=$RANDOM
+
+WM_val1=2
+WM_val2=41
 
 #Input files
 gm_frac=`imglob $1`
@@ -108,7 +111,12 @@ done
 tbss_skeleton -i $gm_frac -o ${gm_frac}_skel
 fslmaths ${gm_frac}_skel -thr $thr -bin ${gm_frac}_skel_mask
 #imcp  ${gm_frac}_skel ${gm_frac}_skel_1
-fslmaths $label_file -uthr $thr_sub -mul 100 -sub ${gm_frac}_skel -mul -1 -thr 0 ${gm_frac}_skel
+
+fslmaths $label_file -thr $(echo "WM_val1 - 0.5"|bc) -uthr $(echo "WM_val1 + 0.5"|bc) -bin -mul 1000 ${temp_number}_WM_1
+fslmaths $label_file -thr $(echo "WM_val2 - 0.5"|bc) -uthr $(echo "WM_val2 + 0.5"|bc) -bin -mul 1000 ${temp_number}_WM_2
+fslmaths $label_file -sub ${temp_number}_WM_1 -sub ${temp_number}_WM_2 -thr 0 ${temp_number}_subcortical
+fslmaths ${temp_number}_subcortical -uthr $thr_sub -mul 100 -sub ${gm_frac}_skel -mul -1 -thr 0 ${gm_frac}_skel
+
 fslmaths $label_file -mul 0 ${temp_number}_zero
 
 k=$thr_left;j=0
