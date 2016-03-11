@@ -46,14 +46,15 @@ exit 1
 [ "$2" = "" ] && usage
 
 #Setting Defaults
-thr_sub=100
-thr_right=2000
-thr_left=1000 #lowest value for left cortical ROIs
+thr_sub=100 #maximum value for subcortical ROIs in the label file 
+thr_right=2000 #lowest value for the right cortical ROIs in the label file
+thr_left=1000 #lowest value for the left cortical ROIs in the label file
 diff=$(echo "$thr_right - $thr_left"|bc)
 sigma=3 #smoothing kernel
 thr=0.7 #GM threshold
-max_rois=60
-temp_number=$RANDOM
+max_rois=60 #number of ROIs in the cortical areas
+temp_number=$RANDOM #random number for intermediate files 
+sthr=0.01 #minimum value after smoothing
 
 WM_val1=2
 WM_val2=41
@@ -142,4 +143,5 @@ done
 
 fslmerge -t ${temp_number}_all_mask ${temp_number}_zero ${temp_number}/mask*
 fslmaths  ${temp_number}_all_mask -s $sigma ${temp_number}_all_mask_smooth
-fslmaths  ${temp_number}_all_mask_smooth -Tmaxn -mul ${gm_frac}_skel_mask ${gm_frac}_skel_labeled
+fslmaths  ${temp_number}_all_mask_smooth -Tmax -mul ${gm_frac}_skel_mask -thr $sthr -bin ${temp_number}_acceptable 
+fslmaths  ${temp_number}_all_mask_smooth -Tmaxn -mas ${gm_frac}_skel_mask -mas ${temp_number}_acceptable ${gm_frac}_skel_labeled
