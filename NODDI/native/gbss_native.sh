@@ -56,8 +56,7 @@ max_rois=60 #number of ROIs in the cortical areas
 temp_number=$RANDOM #random number for intermediate files 
 sthr=0.01 #minimum value after smoothing
 
-WM_val1=2
-WM_val2=41
+vals="2 4 5 7 14 15 16 24 28 31 41 44 46 60 63"
 
 #Input files
 gm_frac=`imglob $1`
@@ -113,9 +112,14 @@ tbss_skeleton -i $gm_frac -o ${gm_frac}_skel
 fslmaths ${gm_frac}_skel -thr $thr -bin ${gm_frac}_skel_mask
 #imcp  ${gm_frac}_skel ${gm_frac}_skel_1
 
-fslmaths $label_file -thr $(echo "WM_val1 - 0.5"|bc) -uthr $(echo "WM_val1 + 0.5"|bc) -bin -mul 1000 ${temp_number}_WM_1
-fslmaths $label_file -thr $(echo "WM_val2 - 0.5"|bc) -uthr $(echo "WM_val2 + 0.5"|bc) -bin -mul 1000 ${temp_number}_WM_2
-fslmaths $label_file -sub ${temp_number}_WM_1 -sub ${temp_number}_WM_2 -thr 0 ${temp_number}_subcortical
+imcp $label_file ${temp_number}_subcortical
+for val in $vals 
+do
+fslmaths $label_file -thr $(echo "$val - 0.5"|bc) -uthr $(echo "$val + 0.5"|bc) -bin -mul 1000 ${temp_number}_ex_sub
+
+fslmaths ${temp_number}_subcortical -sub ${temp_number}_ex_sub -thr 0 ${temp_number}_subcortical
+done
+
 fslmaths ${temp_number}_subcortical -uthr $thr_sub -mul 100 -sub ${gm_frac}_skel -mul -1 -thr 0 ${gm_frac}_skel
 
 fslmaths $label_file -mul 0 ${temp_number}_zero
