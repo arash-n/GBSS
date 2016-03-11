@@ -52,11 +52,11 @@ thr_left=1000 #lowest value for the left cortical ROIs in the label file
 diff=$(echo "$thr_right - $thr_left"|bc)
 sigma=3 #smoothing kernel
 thr=0.7 #GM threshold
-max_rois=60 #number of ROIs in the cortical areas
+max_rois=80 #number of ROIs (Freesurfer)
 temp_number=$RANDOM #random number for intermediate files 
 sthr=0.01 #minimum value after smoothing
 
-vals="2 4 5 7 14 15 16 24 28 31 41 44 46 60 63"
+vals="2 4 5 7 14 15 16 24 28 31 41 44 46 60 63" #Freesurfer subcortical regions to be excluded
 
 #Input files
 gm_frac=`imglob $1`
@@ -120,8 +120,6 @@ fslmaths $label_file -thr $(echo "$val - 0.5"|bc) -uthr $(echo "$val + 0.5"|bc) 
 fslmaths ${temp_number}_subcortical -sub ${temp_number}_ex_sub -thr 0 ${temp_number}_subcortical
 done
 
-fslmaths ${temp_number}_subcortical -uthr $thr_sub -mul 100 -sub ${gm_frac}_skel -mul -1 -thr 0 ${gm_frac}_skel
-
 fslmaths $label_file -mul 0 ${temp_number}_zero
 
 k=$thr_left;j=0
@@ -140,12 +138,17 @@ tmp_val=`printf "%03d" $j`
 fslmaths $label_file -thr $min -uthr $max -bin ${temp_number}/mask_${tmp_val}_r
 fslmaths $label_file -thr $min_r -uthr $max_r -bin ${temp_number}/mask_${tmp_val}_l
 
+if [ $j -gt 0 ]
+then
+fslmaths ${temp_number}_subcortical -thr $(echo "$j - 0.5"|bc) -uthr $(echo "$j + 0.5"|bc) -bin ${temp_number}/sub_mask_${tmp_val}
+fi
+
 j=$((j+1))
 k=$((k+1))
 
 done
 
-fslmerge -t ${temp_number}_all_mask ${temp_number}_zero ${temp_number}/mask*
+fslmerge -t ${temp_number}_all_mask ${temp_number}_zero ${temp_number}/mask* ${temp_number}/sub_mask_*
 fslmaths  ${temp_number}_all_mask -s $sigma ${temp_number}_all_mask_smooth
 fslmaths  ${temp_number}_all_mask_smooth -Tmax -mul ${gm_frac}_skel_mask -thr $sthr -bin ${temp_number}_acceptable 
 fslmaths  ${temp_number}_all_mask_smooth -Tmaxn -mas ${gm_frac}_skel_mask -mas ${temp_number}_acceptable ${gm_frac}_skel_labeled
