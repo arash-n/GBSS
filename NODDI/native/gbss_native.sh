@@ -56,7 +56,7 @@ max_rois=80 #number of ROIs (Freesurfer)
 temp_number=$RANDOM #random number for intermediate files 
 sthr=0.01 #minimum value after smoothing
 
-vals="2 4 5 7 14 15 16 24 28 31 41 44 46 60 63" #Freesurfer subcortical regions to be excluded
+vals="2 4 5 7 14 15 16 24 28 31 41 44 46 60 63 77" #Freesurfer subcortical regions to be excluded
 
 #Input files
 gm_frac=`imglob $1`
