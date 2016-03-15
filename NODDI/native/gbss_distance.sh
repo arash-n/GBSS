@@ -155,5 +155,12 @@ cd ${temp_number}
 for a in *nii.gz
 do
 
-fslstats 
+vol=`fslstats $a -V | awk '{print $1}'`
+if [ $vol -gt 0 ]
+then
 
+distancemap -i $a -o distance_${a} -m ../${temp_number}_search_dis_map
+
+fi
+
+done
