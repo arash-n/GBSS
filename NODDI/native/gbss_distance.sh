@@ -1,5 +1,5 @@
 #!/bin/bash
-#v 0.1 March 13th 2016
+#v 0.1 March 14th 2016
 #Arash Nazeri, Kimel Family Translational Imaging-Genetics Research Lab
 #This script depends on FSL v4.1.9 (or higher)
 #
