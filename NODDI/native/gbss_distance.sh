@@ -160,7 +160,17 @@ if [ $vol -gt 0 ]
 then
 
 distancemap -i $a -o distance_${a} -m ../${temp_number}_search_dis_map
+fslmaths  ../${temp_number}_search_dis_map -div -nan distance_${a} -odt float
+
+else
+
+imcp ../${temp_number}_zero distance_${a}
 
 fi
 
 done
+cd ..
+
+fslmerge -t ${temp_number}_all_dis_inverse ${temp_number}/distance*
+fslmaths ${temp_number}_all_dis_inverse -Tmax ${temp_number}_nearest
+fslmaths  ${gm_frac}_skel_mask -mul ${temp_number}_subcortical -add ${temp_number}_nearest 
