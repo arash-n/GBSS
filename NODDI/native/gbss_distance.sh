@@ -173,4 +173,4 @@ cd ..
 
 fslmerge -t ${temp_number}_all_dis_inverse ${temp_number}/distance*
 fslmaths ${temp_number}_all_dis_inverse -Tmax ${temp_number}_nearest
-fslmaths  ${gm_frac}_skel_mask -mul ${temp_number}_subcortical -add ${temp_number}_nearest 
+fslmaths  ${gm_frac}_skel_mask -mul ${temp_number}_subcortical -add ${temp_number}_nearest ${gm_frac}_skel_labeled
