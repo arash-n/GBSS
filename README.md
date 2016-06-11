@@ -1,9 +1,9 @@
 ## Gray-matter Based Spatial Statistics (NODDI-GBSS)
 [![License](http://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by-nc.svg)](LICENSE)
-###Introduction
+####Introduction
 Gray matter-based spatial statistics (NODDI-GBSS) is a pipeline to perform voxel-wise statistical analysis on gray matter microstructure. Our method is based on GBSS method primarily introduced by Ball <i>et. al</i><sup>1</sup> and discribed elswhere in full details<sup>2,3</sup>. Unlike, the original GBSS method, NODDI-GBSS only uses multi-shell diffusion-weighted images for tissue segmentation and registration<sup>2,3</sup>. To use NODDI-GBSS, FSL and ANTs needs to be installed.
 
-###Overview
+####Overview
 ######<i>gbss_1_reg.sh</i>	
 Gray matter fraction maps are estimated in the native diffusion space by subtracting CSF fraction (fCSF maps from NODDI) and white matter fraction (estimated by two-tissue class segmentation of FA images using <i>Atropos</i>) from 1 in each voxel. To increase tissue contrasts and enhance between-subject registration steps, partial volume estimation maps for each tissue class are multiplied by their corresponding contrast (0 for CSF, 1 for gray matter, and 2 for white matter) and summed together to generate images with similar contrast to T1-weighted images. The resulting images are then used to build a study-specific template using the <i>buildtemplateparallel.sh</i> script in the <b>Advanced Normalization Tools</b> (ANTs). Gray matter fraction, ODI, and NDI images are warped to the template space using the warp fields estimated during the previous step. 
 
@@ -13,7 +13,7 @@ To enhance between-subject alignment of gray matter voxels, GBSS adopts the trac
 ######<i>gbss_3_fill.sh</i>	
 The remaining voxels on the subjects’ skeletons with non-satisfactory gray matter fraction (e.g. below 0.65) are filled with the average of the surrounding satisfactory voxels on the skeleton (e.g. gray matter fraction>0.65) weighted by their closeness with a Gaussian kernel (default: σ=2 mm).
 
-###Citations:
+####Citations:
 1. Ball G, Srinivasan L, Aljabar P, Counsell SJ, Durighel G, Hajnal JV et al. Development of cortical microstructure in the preterm human brain. <i>PNAS</i>; 110(23): 9541-9546.
 2. Nazeri A, Chakravarty MM, Rotenberg DJ, Rajji TK, Rathi Y, Michailovich OV et al. Functional Consequences of Neurite Orientation Dispersion and Density in Humans across the Adult Lifespan. <i>J Neurosci</i> 2015; 35(4): 1753-1762.
 
