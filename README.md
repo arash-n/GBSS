@@ -1,7 +1,7 @@
 ## Gray-matter Based Spatial Statistics (NODDI-GBSS)
 [![License](http://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by-nc.svg)](LICENSE)
 ####Introduction
-Gray matter-based spatial statistics (NODDI-GBSS) is a pipeline to perform voxel-wise statistical analysis on gray matter microstructure. Our method is based on GBSS method primarily introduced by Ball <i>et. al</i><sup>1</sup> and discribed elswhere in full details<sup>2,3</sup>. Unlike the original GBSS method, NODDI-GBSS only uses multi-shell diffusion-weighted images for tissue segmentation and registration<sup>2,3</sup>. To use NODDI-GBSS, FSL and ANTs needs to be installed.
+Gray matter-based spatial statistics (NODDI-GBSS) is a pipeline to perform voxel-wise statistical analysis on gray matter microstructure. Our method is based on GBSS method primarily introduced by Ball <i>et. al</i><sup>1</sup> and discribed elswhere in full details<sup>2,3</sup>. Unlike the original GBSS method, NODDI-GBSS only uses multi-shell diffusion-weighted images for tissue segmentation and registration<sup>2,3</sup>. To use NODDI-GBSS depends on FSL and ANTs.
 
 ####Overview
 ######<i>gbss_1_reg.sh</i>	
@@ -16,4 +16,6 @@ The remaining voxels on the subjects’ skeletons with non-satisfactory gray mat
 ####Citations:
 1. Ball G, Srinivasan L, Aljabar P, Counsell SJ, Durighel G, Hajnal JV et al. Development of cortical microstructure in the preterm human brain. <i>PNAS</i>; 110(23): 9541-9546.
 2. Nazeri A, Chakravarty MM, Rotenberg DJ, Rajji TK, Rathi Y, Michailovich OV et al. Functional Consequences of Neurite Orientation Dispersion and Density in Humans across the Adult Lifespan. <i>J Neurosci</i> 2015; 35(4): 1753-1762.
+3. Nazeri A, Mulsant BH, Rajji TK, Levesque ML, Pipitone J, Stefanik L, Roostaei T et al. Gray matter neuritic microstructure deficits in schizophrenia and bipolar disorder. <i>Submitted Manuscript</i>
+
 
