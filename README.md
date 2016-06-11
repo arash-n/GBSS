@@ -1,7 +1,7 @@
 # Gray-matter Based Spatial Statistics (NODDI-GBSS)
 [![License](http://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by-nc.svg)](LICENSE)
 ###Introduction
-Gray matter-based spatial statistics (NODDI-GBSS) is a pipeline to perform voxel-wise statistical analysis on gray matter microstructure. Our method is based on GBSS method primarily introduced by Ball <i>et. al</i><sup>1,2</sup>. 
+Gray matter-based spatial statistics (NODDI-GBSS) is a pipeline to perform voxel-wise statistical analysis on gray matter microstructure. Our method is based on GBSS method primarily introduced by Ball <i>et. al</i><sup>1</sup> and discribed elswhere in full details<sup>2,3</sup>. Unlike, the original GBSS method, NODDI-GBSS only uses multi-shell diffusion-weighted images for tissue segmentation and registration<sup>2,3</sup>. To use NODDI-GBSS, FSL and ANTs needs to be installed.
 
 ###Overview
 ######<i>gbss_1_reg.sh</i>	
