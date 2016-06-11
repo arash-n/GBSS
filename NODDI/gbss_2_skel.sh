@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#v2.1 July 28th 2015
+#v0.2.1 July 28th 2015
 #Arash Nazeri and Jon Pipitone, Kimel Family Translational
 #Imaging-Genetics Research Lab
 #This script depends on ANTs v2.1 and FSL v4.1.9 (or higher)
