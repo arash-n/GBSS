@@ -13,6 +13,13 @@ To enhance between-subject alignment of gray matter voxels, GBSS adopts the trac
 ######<i>gbss_3_fill.sh</i>	
 The remaining voxels on the subjects’ skeletons with non-satisfactory gray matter fraction (e.g. below 0.65) are filled with the average of the surrounding satisfactory voxels on the skeleton (e.g. gray matter fraction>0.65) weighted by their closeness with a Gaussian kernel (default: σ=2 mm).
 
+####Installation:
+NODDI-GBSS scripts rely on FSL (4.1.9 or higher) and ANTS (v2.1). Simply clone the scripts as follows:
+```bash
+git clone https://github.com/arash-n/GBSS
+```
+Add the GBSS/NODDI folder to the $PATH. 
+
 ####Usage:
 Run the scripts sequentially (from NODDI folder).
 
