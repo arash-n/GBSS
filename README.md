@@ -13,6 +13,18 @@ To enhance between-subject alignment of gray matter voxels, GBSS adopts the trac
 ######<i>gbss_3_fill.sh</i>	
 The remaining voxels on the subjects’ skeletons with non-satisfactory gray matter fraction (e.g. below 0.65) are filled with the average of the surrounding satisfactory voxels on the skeleton (e.g. gray matter fraction>0.65) weighted by their closeness with a Gaussian kernel (default: σ=2 mm).
 
+####Usage:
+#######First Step:
+Run scripts sequentially. For <i>gbss_1_reg.sh</i>, outputs from the NODDI and DTI models should be already available.This script works as follows:
+
+a) The input older containing the following subdirectories: FA, CSF, ODI, fIC
+b) Each Folder should contain corresponding image files with the same subject name in all folders.
+<i>NOTE</i>: Remove any underline (_) from your filenames.
+
+```bash
+gbss_1_reg.sh [options] output_directory
+```
+
 ####Citations:
 1. Ball G, Srinivasan L, Aljabar P, Counsell SJ, Durighel G, Hajnal JV et al. Development of cortical microstructure in the preterm human brain. <i>PNAS</i>; 110(23): 9541-9546.
 2. Nazeri A, Chakravarty MM, Rotenberg DJ, Rajji TK, Rathi Y, Michailovich OV et al. Functional Consequences of Neurite Orientation Dispersion and Density in Humans across the Adult Lifespan. <i>J Neurosci</i> 2015; 35(4): 1753-1762.
