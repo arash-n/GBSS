@@ -17,12 +17,22 @@ The remaining voxels on the subjects’ skeletons with non-satisfactory gray mat
 ######First Step:
 Run scripts sequentially. For <i>gbss_1_reg.sh</i>, outputs from the NODDI and DTI models should be already available.This script works as follows:
 
-a) The input older containing the following subdirectories: FA, CSF, ODI, fIC
+a) The input older containing the following subdirectories: FA, CSF, ODI, fIC.
 b) Each Folder should contain corresponding image files with the same subject name in all folders.
 
 <i>NOTE</i>: Remove any underline (_) from your filenames.
 ```bash
 gbss_1_reg.sh [options] output_directory
+```
+######Second Step:
+<i>NOTE</i>: cd to output_directory
+```bash
+gbss_2_skel.sh
+```
+######Third Step:
+<i>NOTE</i>: cd to stats folder
+```bash
+gbss_3_fill.sh
 ```
 
 ####Citations:
