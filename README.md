@@ -19,8 +19,8 @@ Run scripts sequentially. For <i>gbss_1_reg.sh</i>, outputs from the NODDI and D
 
 a) The input older containing the following subdirectories: FA, CSF, ODI, fIC
 b) Each Folder should contain corresponding image files with the same subject name in all folders.
-<i>NOTE</i>: Remove any underline (_) from your filenames.
 
+<i>NOTE</i>: Remove any underline (_) from your filenames.
 ```bash
 gbss_1_reg.sh [options] output_directory
 ```
