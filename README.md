@@ -21,7 +21,7 @@ git clone https://github.com/arash-n/GBSS
 Add the GBSS/NODDI folder to the $PATH. 
 
 ####Usage:
-Run the scripts sequentially (from NODDI folder).
+Run the scripts sequentially. First, create an output directory containing following folders: FA, CSF, ODI, fIC. Copy respective images into each directory (all should have the same name across the folders: e.g. sub001.nii.gz).
 
 ######First Step:
 For <i>gbss_1_reg.sh</i>, outputs from the NODDI and DTI models should be already available.This script works as follows:
