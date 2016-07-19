@@ -30,6 +30,7 @@ echo "1) The input_directory containing the following subdirectories:"
 echo "From DTI: FA; from NODDI: CSF, ODI, fIC"
 echo "2) Each Folder should contain corresponding image files with the same subject name in all folders."
 echo "NOTE: Remove any underline (_) from your filenames."
+echo "NOTE: Provide the absolute path for input_directory "
 echo ""
 echo "Here is its usage:"
 echo "Usage: gbss_1_reg.sh [options] input_directory"
@@ -54,7 +55,7 @@ exit 1
 
 #Setting Defaults
 method=1;
-template="${FSLDIR}/MNI152_T1_1mm.nii.gz"
+template="${FSLDIR}/data/standard/MNI152_T1_1mm.nii.gz"
 atropos_method=1;
 ants_number=4;
 mrf=0.3;
@@ -117,7 +118,7 @@ while getopts ":c:t:w:n:f:p:h" OPT; do
 done
 
 shift $((OPTIND-1))
-out_dir=$1 #output directory
+out_dir=$1 #output directory is the same as the input directory
 
 [ "$out_dir" = "" ] && usage
 
