@@ -47,6 +47,6 @@ gbss_3_fill.sh
 ####Citations:
 1. Ball G, Srinivasan L, Aljabar P, Counsell SJ, Durighel G, Hajnal JV et al. Development of cortical microstructure in the preterm human brain. <i>PNAS</i>; 110(23): 9541-9546.
 2. Nazeri A, Chakravarty MM, Rotenberg DJ, Rajji TK, Rathi Y, Michailovich OV et al. Functional Consequences of Neurite Orientation Dispersion and Density in Humans across the Adult Lifespan. <i>J Neurosci</i> 2015; 35(4): 1753-1762.
-3. Nazeri A, Mulsant BH, Rajji TK, Levesque ML, Pipitone J, Stefanik L, Roostaei T et al. Gray matter neuritic microstructure deficits in schizophrenia and bipolar disorder. <i>Under Review</i>.
+3. Nazeri A, Mulsant BH, Rajji TK, Levesque ML, Pipitone J, Stefanik L, Saba Shahab, Roostaei T et al. Gray matter neuritic microstructure deficits in schizophrenia and bipolar disorder. <i>Biological Psychiatry</i> 2016; Accepted Manuscript.
 
 
