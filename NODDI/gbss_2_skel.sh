@@ -149,4 +149,8 @@ cd lesion
 
 fslsplit all_lesion lesion
 
-
+# Logging parameters
+echo "Logging Parameters">../gbss_2_parameter_log.txt
+echo "Method=$method">>../gbss_2_parameter_log.txt
+echo "Gray Matter Thresold={$thresh}">>../gbss_2_parameter_log.txt
+echo "Fraction of subjects with skeletonized voxel=${perc}">>../gbss_2_parameter_log.txt
