@@ -44,6 +44,23 @@ gbss_2_skel.sh
 gbss_3_fill.sh
 ```
 
+#### Potential Alternative Routes:
+
+###### NODDI Model Fitting:
+If you are dealing with large high-resolution multi-shell DWI datasets and have access to computational clusters (+GPUs), I highly recommend using MDT toolbox: https://github.com/robbert-harms/MDT
+
+###### Tissue Segmentations:
+In the original implemenation of NODDI-GBSS, NODDI (Free water maps) and DTI models (FA map--> white matter segmentation) are used to indirectly estimate gray matter probability maps. However, it is possible to use multi-shell data and segment them into different tissue classes based on tissue masks from the structural MRI. This has been implemented as a part of <i>MRtrix3</i>: 
+
+```bash
+dwi2fod msmt_csd dwi.mif wm_response.txt wmfod.mif gm_response.txt gm.mif csf_response.txt csf.mif
+```
+
+Here is the link for more information:
+https://mrtrix.readthedocs.io/en/latest/constrained_spherical_deconvolution/multi_shell_multi_tissue_csd.html
+
+<i>NOTE</i>: Given the differences in estimation, gray matter probability maps will not be identical with original NODDI-GBSS implementation.
+
 #### Citations:
 1. Ball G, Srinivasan L, Aljabar P, Counsell SJ, Durighel G, Hajnal JV et al. Development of cortical microstructure in the preterm human brain. <i>PNAS</i>; 110(23): 9541-9546.
 2. Nazeri A, Chakravarty MM, Rotenberg DJ, Rajji TK, Rathi Y, Michailovich OV et al. Functional Consequences of Neurite Orientation Dispersion and Density in Humans across the Adult Lifespan. <i>J Neurosci</i> 2015; 35(4): 1753-1762.
