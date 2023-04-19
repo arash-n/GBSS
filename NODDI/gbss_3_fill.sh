@@ -20,6 +20,9 @@
 # You should have received a copy of the license along with this
 # work.  If not, see <http://creativecommons.org/licenses/by-nc/4.0/>.
 
+Studyfolder=~/GBSS/K00309003/stats
+cd $Studyfolder
+
 if [ ! -e all_lesion.nii.gz ]
 then
 
